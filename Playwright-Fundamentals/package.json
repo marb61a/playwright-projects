@@ -1,0 +1,14 @@
+{
+  "name": "playwright-fundamentals",
+  "version": "1.0.0",
+  "description": "Playwright test framework fundamentals",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Martin",
+  "license": "ISC",
+  "dependencies": {
+    "prettier": "^2.5.1"
+  }
+}
