@@ -1,0 +1,11 @@
+Installation
+    - Setup npm and prettier (if user wants to use prettier)
+    - Install playwright test not playwright which is a general web automation tool
+        - npm install @playwright/test
+    - Then install the full framework
+        - npx playwright install
+
+Fundamentals
+    - Create a tests folder in the project
+    - Tests will be written in Typescript which is standard practice
+    - To run playwright, at the command line enter -> npx playwright test
