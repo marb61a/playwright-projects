@@ -9,3 +9,21 @@ Fundamentals
     - Create a tests folder in the project
     - Tests will be written in Typescript which is standard practice
     - To run playwright, at the command line enter -> npx playwright test
+        - Default is to run test in headless mode
+    - To run Playwright in headed mode use the following command (See the browser open)
+        - npx playwright test --headed
+        - Headed tests are slower
+    - To run using a specific browser use the following command
+        - npx playwright test --browser=firefox
+        - This may create issues with the anti-virus !!!
+        - This can be combined with headed mode using the following command
+            - npx playwright test --headed --browser=firefox
+    - To run all browsers when running Playwright
+        - npx playwright test --browser=all
+        - Again this will be a lot slower for testing
+        - Tests are ran in parallel
+    - Specific tests can be ran using the following command
+        - npx playwright test <path_to_test>
+        - npx playwright test tests/example.spec.ts
+        - Incorrect paths will show a no tests found messge
+    -
