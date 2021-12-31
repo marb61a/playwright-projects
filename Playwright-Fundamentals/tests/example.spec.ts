@@ -17,7 +17,7 @@ test("Clicking on elements", async({page}) => {
     // Click on the signin button
     await page.click("#signin_button")
 
-    // Select the sign in button using Playwright which can selec element by text
+    // Select the sign in button using Playwright which can select element by text
     await page.click("text=Sign in")
 
     // Create error message variable which will be used in assertion
@@ -50,5 +50,29 @@ test("Clicking on elements", async({page}) => {
 // })
 
 test("Work with inputs", async({page}) => {
-    
+    // Use the zero webappsecurity page for the example
+    await page.goto("http://zero.webappsecurity.com/index.html")
+
+    // Click on the signin button
+    await page.click("#signin_button")
+
+    // Start filling in form with login field
+    await page.type('#user_login', 'some username')
+
+    // Password field
+    await page.type('#user_password', 'some password')
+
+    // Select the sign in button using Playwright which can selec element by text
+    await page.click("text=Sign in")
+
+    // Create error message variable which will be used in assertion
+    const errorMessage = await page.locator(".alert-error")
+
+    // Check the error message is ok
+    await expect(errorMessage).toContainText("Login and/or password are wrong")
+
+})
+
+test("Testing assertions", async({page}) => {
+
 })
