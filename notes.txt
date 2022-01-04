@@ -26,4 +26,26 @@ Fundamentals
         - npx playwright test <path_to_test>
         - npx playwright test tests/example.spec.ts
         - Incorrect paths will show a no tests found messge
-    -
+    - Annotations
+        - Playwright has certain methods which allow it more fine grained control over tests being run and in what order etc.
+        - One such annotation is skip, the skip word is simply added to  a test and it will not be run in a sequence (test.skip)
+            - The test will be marked as being skipped in results
+        - To only run one test use the only keyword when declaring a test (test.only)
+            - Each test marked only will be ran
+        - Using describe (test.describe) will allow for grouping tests into a suite
+            - The describe annotation is not asynchronous so there is no need to use the async keyword
+    - Tagging
+        - This can be thought of as an extension to Annotations
+        - Add tag to test name using @tag eg 'Assertions @MyTag'
+        - This can be used to run only the test(s) matching certain tags -- npx playwright test --grep @myTag
+        - Inverted commas need to be added to @MyTag when running on Windows !!!!
+        - These tags can be used on multiple tests
+        - Tests with certain tags can also be ignored as well as run
+    - Config Files
+        - These can help avoid having to type every option into the command line
+        - There can be multiple config files used
+        - When running these files there are various options that can be added
+        - npx playwright test --config=<config_file_name>
+            - To select a specific browser add --project=Firefox to the command or whichever browser is desired
+        - The config must be exported at the file end
+    - 
