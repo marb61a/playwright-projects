@@ -74,7 +74,7 @@ test.describe("My first test suite", () => {
     
     })
     
-    test("Testing assertions", async({page}) => {
+    test("Testing assertions @MyTag", async({page}) => {
         // Using example.com as site for testing
         await page.goto("https://www.example.com")
     
