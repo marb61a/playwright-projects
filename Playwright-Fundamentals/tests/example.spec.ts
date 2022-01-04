@@ -74,5 +74,27 @@ test("Work with inputs", async({page}) => {
 })
 
 test("Testing assertions", async({page}) => {
+    // Using example.com as site for testing
+    await page.goto("https://www.example.com")
 
+    // Assert URL
+    await expect(page).toHaveURL("https://www.example.com")
+
+    // Assert title
+    await expect(page).toHaveTitle("Example Domain")
+
+    // Assert element visibility
+    const element = await page.locator('h1')
+    await expect(element).toBeVisible()
+
+    // Assert text value
+    await expect(element).toHaveText("Example Domain")
+
+    // Assert element count
+    await expect(element).toHaveCount(1)
+
+    // Assert element not visible
+    const nonExistingElement = await page.locator('h5')
+    await expect(nonExistingElement).not.toBeVisible()
+    
 })
