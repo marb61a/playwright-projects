@@ -48,4 +48,15 @@ Fundamentals
         - npx playwright test --config=<config_file_name>
             - To select a specific browser add --project=Firefox to the command or whichever browser is desired
         - The config must be exported at the file end
-    - 
+    - Reporters
+        - Simply add a report switch to the command line
+        - There are multiple reporters available
+        - Using line reporter will not display any useful information to the screen
+        - The list is the default reporter for Playwright
+        - The dot reporter will show only green or red dots for tests
+        - Using Junit will create an XML format report in the console (--junit)
+        - Using html will generate the playwright report folder (--html)
+            - The html report is a html file which can be seen using - npx playwright show-report
+    - Screenshots
+        - 
+    -
