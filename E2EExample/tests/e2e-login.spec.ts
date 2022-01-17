@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe("Login / logout test", () => {
+test.describe.parallel("Login / logout test", () => {
     // Before hook
     test.beforeEach(async({page}) => {
         await page.goto('http://zero.webappsecurity.com')
@@ -26,6 +26,9 @@ test.describe("Login / logout test", () => {
 
         const accountSummarytab = await page.locator("#account_summary_tab")
         await expect(accountSummarytab).toBeVisible()
+
+        await page.goto("http://zero.webappsecurity.com/logout.html")
+        await expect(page).toHaveURL('http://zero.webappsecurity.com/index.html')
     })
 
 });
