@@ -22,4 +22,13 @@ test.describe("Feedback Form", async() => {
     })
 
     // Submit feedback form
+    test("Submit feedback form", async({page}) => {
+        await page.type('#name', 'some name')
+        await page.type('#email', 'some email@email.com')
+        await page.type('#subject', 'some subject')
+        await page.type('#comment', 'some comment about the app')
+
+        await page.click('input[type="submit"]')
+        await page.waitForSelector('#feedback-title')
+    })
 })
