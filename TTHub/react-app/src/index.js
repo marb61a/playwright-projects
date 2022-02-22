@@ -80,6 +80,7 @@ class App extends React.Component {
                   alt=""
                   src={require('./assets/images/desktop-header-logo.svg')}
                   href="/"
+                  data-id="header-logo"
                   width="330"
                   height="80"
                   className="d-inline-block align-top testing-talks-logo"
