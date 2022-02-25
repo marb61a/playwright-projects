@@ -1,38 +1,35 @@
-import {BeforeAll, Before, AfterAll, After, ITestCaseHookParameter} from "@cucumber/cucumber";
-import { getScenarioDescription } from "@cucumber/cucumber/lib/formatter/helpers/pickle_parser";
-const {chromium} = require("playwright");
+import {Before, After, ITestCaseHookParameter} from "@cucumber/cucumber";
+import { ScenarioWorld } from './world'
 
-BeforeAll(async() => {
-    global.browser = await chromium.launch({
-        headless:false,
-    })
-});
+Before(async function (this: ScenarioWorld, scenario: ITestCaseHookParameter) {
+    console.log(`Running the cucumber scenario ${scenario.pickle.name}`)
 
-AfterAll(async() => {
-    await global.browser.close();
-});
-
-Before(async(scenario: ITestCaseHookParameter) => {
-    // Allows for passing in parameters to global context
-    global.context = await global.browser.newContext({
+    const contextOptions = {
         recordVideo: {
-            dir: './reports/videos/' + scenario.pickle.name,
+            dir: './reports/videos/' + scenario.pickle.name
         }
-    })
+    }
 
-    global.page = await global.context.newPage();
+    const ready = await this.init(contextOptions)
+    return ready
 });
 
-After(async(scenario: ITestCaseHookParameter) => {
+After(async function(this: ScenarioWorld, scenario: ITestCaseHookParameter) {
+    // Using this avoids the need to use global context
+    const{
+        screen:{page, browser}
+    } = this
+
     // Use here instead of after all which would create screenshots in every context
     const scenarioStatus = scenario.result?.status
 
     if(scenarioStatus === 'FAILED'){
-        await global.page.screenshot({
+        await page.screenshot({
             path: `./reports/screenshots/${scenario.pickle.name}.png`
         })
     }
 
-    await global.page.close()
+    await browser.close()
+    return browser
 });
 
