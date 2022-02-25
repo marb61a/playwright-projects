@@ -5,6 +5,7 @@ import playwright, {
     BrowserContext,
     BrowserType
 } from "playwright"
+import { env } from '../../env/parseEnv'
 import {World, IWorldOptions, setWorldConstructor} from "@cucumber/cucumber"
 
 export type Screen = {
@@ -42,5 +43,16 @@ export class ScenarioWorld extends World {
 
         type AutomationBrowser = typeof automationBrowsers[number]
         const automationBrowser = env('UI_AUTOMATION_BROWSER') as AutomationBrowser
+
+        const browserType: BrowserType = playwright[automationBrowser]
+        const browser = await browserType.launch({
+            headless: process.env.HEADLESS !== 'false',
+            // Disables some of the chrome browser security features and will speed up tests
+            args: ['--disable-web-security', '--disable-features=IsolateOrigins, site-per-process']
+        })
+
+        return browser
     }
  }
+
+ setWorldConstructor(ScenarioWorld)
