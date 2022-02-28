@@ -1,4 +1,5 @@
 import {Before, After, ITestCaseHookParameter} from "@cucumber/cucumber";
+// import { env } from '../../env/parseEnv';
 import { ScenarioWorld } from './world'
 
 Before(async function (this: ScenarioWorld, scenario: ITestCaseHookParameter) {
