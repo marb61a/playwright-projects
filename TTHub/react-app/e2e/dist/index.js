@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.smoke = exports.regression = exports.dev = void 0;
 // Holds arguments instead of using package.json
-var common = "./src/feature/**/*.feature                 --require-module ts-node/register  \n                --require ./src/step-definitions/**/**/*.ts                 -f json:./reports/reports.json                 --format progress-bar"; // Creates profiles for different test situations (Previously in package.json scripts)
+var common = "./src/features/**/*.feature                 --require-module ts-node/register  \n                --require ./src/step-definitions/**/**/*.ts                 -f json:./reports/reports.json                 --format progress-bar"; // Creates profiles for different test situations (Previously in package.json scripts)
 
 var dev = "".concat(common, " --tags '@dev'");
 exports.dev = dev;

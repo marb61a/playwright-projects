@@ -1,6 +1,6 @@
 // Holds arguments instead of using package.json
 
-const common = `./src/feature/**/*.feature \
+const common = `./src/features/**/*.feature \
                 --require-module ts-node/register \ 
                 --require ./src/step-definitions/**/**/*.ts \
                 -f json:./reports/reports.json \
