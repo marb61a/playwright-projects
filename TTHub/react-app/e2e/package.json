@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "transpile": "rimraf dist && babel --extensions .ts --out-dir dist src",
-    "cucumber": "yarn transpile && cucumber-js"
+    "transpile":"rimraf dist && babel --extensions .ts --out-dir dist src",
+    "cucumber-compile":"yarn transpile && cucumber-js",
+    "cucumber":"COMMON_CONFIG_FILE=env/common.env yarn cucumber-compile"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
   "description": "",
   "dependencies": {
     "@babel/cli": "^7.17.6",
+    "dotenv": "^16.0.0",
     "playwright-chromium": "^1.19.2"
   }
 }

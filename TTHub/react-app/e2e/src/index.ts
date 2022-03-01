@@ -1,5 +1,12 @@
-// Holds arguments instead of using package.json
+// Import file which holds environmental variable that need to be set
+import dotenv from 'dotenv' 
+import {env} from './env/parseEnv'
 
+dotenv.config({
+    path: env('COMMON_CONFIG_FILE')
+})
+
+// Holds arguments instead of using package.json
 const common = `./src/features/**/*.feature \
                 --require-module ts-node/register \ 
                 --require ./src/step-definitions/**/**/*.ts \
