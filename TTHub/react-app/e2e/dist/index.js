@@ -23,5 +23,5 @@ var dev = "".concat(common, " --tags '@dev'");
 exports.dev = dev;
 var smoke = "".concat(common, " --tags '@smoke'");
 exports.smoke = smoke;
-var regression = "".concat(common, " --tags @regression");
+var regression = "".concat(common, " --tags '@regression'");
 exports.regression = regression;
