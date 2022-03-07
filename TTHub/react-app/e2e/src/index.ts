@@ -1,6 +1,6 @@
 // Import file which holds environmental variable that need to be set
 import dotenv from 'dotenv' 
-import { env } from './env/parseEnv'
+import { env, getJsonFromFile } from './env/parseEnv'
 import {
     GlobalConfig,
     HostsConfig,
@@ -22,6 +22,7 @@ const worldParameters: GlobalConfig = {
 const common = `./src/features/**/*.feature \
                 --require-module ts-node/register \ 
                 --require ./src/step-definitions/**/**/*.ts \
+                --world-paramters ${JSON.stringify(worldParameters)} \
                 -f json:./reports/reports.json \
                 --format progress-bar`
 
