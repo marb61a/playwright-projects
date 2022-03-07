@@ -10,7 +10,7 @@ import {
 dotenv.config({ path: env('COMMON_CONFIG_FILE')})
 
 // Retrives JSON mappings
-const hostsConfig: HostsConfig = getJsonFromFile(env('HOSTS_URL_PATH')) 
+const hostsConfig: HostsConfig = getJsonFromFile(env('HOSTS_URLS_PATH')) 
 const pagesConfig: PagesConfig = getJsonFromFile(env('PAGE_URLS_PATH')) 
 
 const worldParameters: GlobalConfig = {
