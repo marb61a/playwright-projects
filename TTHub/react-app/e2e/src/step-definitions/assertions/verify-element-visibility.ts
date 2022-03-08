@@ -3,10 +3,11 @@ import { expect } from '@playwright/test'
 
 import { ElementKey } from '../../env/global'
 import { getElementLocator } from '../../support/web-element-helper'
+import {ScenarioWorld} from '../setup/world'
 
 Then(
     /^the "([^"]*)" should contain the text "(.*)"$/,
-    async function(elementKey: ElementKey, expectedElementText: string) {
+    async function(this: ScenarioWorld, elementKey: ElementKey, expectedElementText: string) {
         const {
             screen: {page},
             globalConfig,
