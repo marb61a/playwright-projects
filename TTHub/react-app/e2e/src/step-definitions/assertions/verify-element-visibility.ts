@@ -6,12 +6,16 @@ import { getElementLocator } from '../../support/web-element-helper'
 
 Then(
     /^the "([^"]*)" should contain the text "(.*)"$/,
-    async function(elementKey: string, expectedElementText: string) {
+    async function(elementKey: ElementKey, expectedElementText: string) {
         const {
-            screen: {page}
+            screen: {page},
+            globalConfig,
+            globalVariables
         } = this
 
         console.log(`the ${elementKey} should contain the text ${expectedElementText}`)
+
+        const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig)
 
         const content = await page.textContent("[data-id='contacts']")
 
@@ -22,7 +26,7 @@ Then(
 
 Then(
     /^the "([^"]*)" should be displayed/,
-    async function (elementKey: string) {
+    async function (elementKey: ElementKey) {
         const {
             screen: {page},
             globalVariables,
@@ -33,6 +37,8 @@ Then(
 
         const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig)
 
-        await expect(elementIdentifier).toBeVisible()
+        // Element identifier cannot be passed directly to a toBeVisible() function
+        const locator = page.locator(elementIdentifier)
+        await expect(locator).toBeVisible()
     }
 )
