@@ -10,13 +10,12 @@ Then(
     async function (elementKey: ElementKey) {
         const {
             screen: {page},
-            globalVariables,
             globalConfig
         } = this
 
         console.log(`The ${elementKey} should be displayed`)
 
-        const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         // Element identifier cannot be passed directly to a toBeVisible() function
         const locator = page.locator(elementIdentifier)

@@ -10,13 +10,12 @@ Then(
     async function(this: ScenarioWorld, elementKey: ElementKey, expectedElementText: string) {
         const {
             screen: {page},
-            globalConfig,
-            globalVariables
+            globalConfig
         } = this
 
         console.log(`the ${elementKey} should contain the text ${expectedElementText}`)
 
-        const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         // Expect from playwright does not work well with custom waitFor functionality so is replaced
         await waitFor(async() => {
