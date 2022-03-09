@@ -24,3 +24,25 @@ export const navigateToPage = async (
 
     await page.goto(url.href)
 }
+
+const pathMatchesPageId = (
+    path: string,
+    pageId: PageId,
+    { pagesConfig }: GlobalConfig
+): boolean => {
+    const pageRegexString = pagesConfig[pageId].regex
+    const pageRegex = new RegExp(pageRegexString)
+    return pageRegex.test(path)
+}
+
+// Retrieves and passes current url, it uses regex to ensure that current pageId matches
+// current url
+export const currentPathMatchesPageId = (
+    page: Page,
+    pageId: PageId,
+    globalConfig: GlobalConfig
+): boolean => {
+    // URL is a TS built in function to handle dealing with URL's
+    const { pathname: currentPath} = new URL(page.url())
+    return pathMatchesPageId(currentPath, pageId, globalConfig)
+}
