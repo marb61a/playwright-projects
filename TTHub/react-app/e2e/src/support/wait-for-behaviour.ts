@@ -8,7 +8,7 @@ export const waitFor = async <T>(
     }
 ): Promise<T> => {
     const {
-        timeout= 30000, wait=2000
+        timeout= 10000, wait=2000
     } = options || {}
 
     // New sleep resolves the promise

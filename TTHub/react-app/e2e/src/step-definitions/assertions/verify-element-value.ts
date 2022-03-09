@@ -6,25 +6,23 @@ import {ScenarioWorld} from '../setup/world'
 import { waitFor } from '../../support/wait-for-behaviour'
 
 Then(
-    /^the "([^"]*)" should be displayed/,
-    async function (elementKey: ElementKey) {
+    /^the "([^"]*)" should contain the text "(.*)"$/,
+    async function(this: ScenarioWorld, elementKey: ElementKey, expectedElementText: string) {
         const {
             screen: {page},
-            globalVariables,
-            globalConfig
+            globalConfig,
+            globalVariables
         } = this
 
-        console.log(`The ${elementKey} should be displayed`)
+        console.log(`the ${elementKey} should contain the text ${expectedElementText}`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig)
 
-        // Element identifier cannot be passed directly to a toBeVisible() function
-        const locator = page.locator(elementIdentifier)
-
         // Expect from playwright does not work well with custom waitFor functionality so is replaced
         await waitFor(async() => {
-            const isElementVisible = (await page.$(elementIdentifier)) != null
-            return isElementVisible
+            const elementText = (await page.textContent(elementIdentifier))
+            return elementText?.includes(expectedElementText)
         })
+
     }
 )
