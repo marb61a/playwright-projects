@@ -1,14 +1,17 @@
+// Surrounds an assertion
 export const waitFor = async <T>(
     predicate: () => T | Promise <T>, 
-    options: {
-        timeout:number;
-        wait:number;
+    // Question mark operator shows variable is optional !!
+    options?: {
+        timeout?:number;
+        wait?:number;
     }
 ): Promise<T> => {
     const {
         timeout= 30000, wait=2000
     } = options || {}
 
+    // New sleep resolves the promise
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
     const startDate = new Date()
 
