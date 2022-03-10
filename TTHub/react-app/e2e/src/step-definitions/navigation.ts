@@ -12,7 +12,6 @@ Given(
     async function(this: ScenarioWorld, pageId: PageId) {
         const {
             screen: {page},
-            globalVariables,
             globalConfig
         } = this
 
