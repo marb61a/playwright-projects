@@ -12,5 +12,22 @@ When (/^I click the "({^"}*)" (?:button|link|icon|element)$/,
             screen: {page},
             globalConfig
         } = this
+
+        console.log(`I click the ${elementKey} (?:button|link|icon|element)`)
+
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        await waitFor( async () => {
+            // Waits to return true until element is visible
+            const result = await page.waitForSelector(elementIdentifier, {
+                state: 'visible'
+            })
+
+            if(result){
+                await clickElement(page, elementIdentifier)
+            }
+
+            return result
+        })
     }
 )
