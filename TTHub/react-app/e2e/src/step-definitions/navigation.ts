@@ -30,6 +30,10 @@ Given (
             screen: { page },
             globalConfig
         } = this
-        
+
+        console.log(`I am directed to the ${pageId} page`)
+
+        // Stabilises the framework
+        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig))
     }
 )
