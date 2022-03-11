@@ -22,3 +22,14 @@ Given(
         await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig))
     }
 )
+
+Given (
+    /^I directed to the "([^"]*)" page$/,
+    async function(this: ScenarioWorld, pageId: PageId) {
+        const {
+            screen: { page },
+            globalConfig
+        } = this
+        
+    }
+)
