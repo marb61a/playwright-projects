@@ -3,6 +3,7 @@ import { waitFor } from "../support/wait-for-behaviour";
 import { getElementLocator } from "../support/web-element-helper";
 import { ScenarioWorld } from "./setup/world";
 import { ElementKey } from "../env/global";
+import { inputValue } from '../support/html-behaviour'
 
 Then(
     /^ I fill in the "([^"]*)" with "([^"]*)"$/,
@@ -26,5 +27,12 @@ Then(
 
             return result
         })
+    }
+)
+
+Then(
+    /^ I select the "([^"]*)" option from the "([^"]*)"$/,
+    async function(){
+        
     }
 )

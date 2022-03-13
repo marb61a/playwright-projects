@@ -6,5 +6,5 @@ Feature: As a user I expect to be able to create contacts
         And I click on the "create" button
         Then I am directed to the "create contact" page
         And the "create contact header" should contain the text "Create Contact"
-        
+        And I fill in the "name" input with "Joe Bloggs"
         
