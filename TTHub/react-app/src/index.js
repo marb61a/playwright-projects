@@ -95,7 +95,7 @@ class App extends React.Component {
   renderCreateForm = ({history}) => {
     return (
       <>
-        <h1 class="create-contact">Create Contact</h1>
+        <h1 data-id="create-contact-header" class="create-contact">Create Contact</h1>
         <ContactForm
           contact={null}
           onSave={contact => this.onCreate(contact, history)}
