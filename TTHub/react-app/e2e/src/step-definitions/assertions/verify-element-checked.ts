@@ -13,5 +13,14 @@ Then(
             globalConfig
         } = this
         
+        console.log(`The ${elementKey} radio button should be checked`)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        await waitFor(async() => {
+            const isElementChecked = await page.isChecked(elementIdentifier)
+
+            return isElementChecked
+        })
+
     }
 )

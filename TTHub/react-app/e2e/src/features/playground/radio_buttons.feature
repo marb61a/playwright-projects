@@ -6,5 +6,6 @@ Feature: As a user I can interact with radio buttons
     Scenario: As a user I can interact and assert on radio buttons
         Given I am on the "home" page
         And I click on the "playground" button
-        And I am directed to the "playground" page
+        When I am directed to the "playground" page
         And the "female" radio button should be checked
+        Then I check the "male" radio button
