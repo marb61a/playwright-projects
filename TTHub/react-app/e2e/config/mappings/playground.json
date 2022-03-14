@@ -1,4 +1,5 @@
 {
     "female" : "[value='female']",
-    "female label" : "[data-id='female-radio-button']"
+    "female label" : "[data-id='female-radio-button']",
+    "male" : "[value='male']"
 }
