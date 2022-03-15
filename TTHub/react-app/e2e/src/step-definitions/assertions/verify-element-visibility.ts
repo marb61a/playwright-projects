@@ -6,14 +6,14 @@ import {ScenarioWorld} from '../setup/world'
 import { waitFor } from '../../support/wait-for-behaviour'
 
 Then(
-    /^the "([^"]*)" should be displayed/,
-    async function (elementKey: ElementKey) {
+    /^the "([^"]*)" should( not)? be displayed/,
+    async function (this: ScenarioWorld, elementKey: ElementKey, negate: boolean) {
         const {
             screen: {page},
             globalConfig
         } = this
 
-        console.log(`The ${elementKey} should be displayed`)
+        console.log(`The ${elementKey} should ${negate?'not':''} be displayed`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
@@ -23,7 +23,8 @@ Then(
         // Expect from playwright does not work well with custom waitFor functionality so is replaced
         await waitFor(async() => {
             const isElementVisible = (await page.$(elementIdentifier)) != null
-            return isElementVisible
+            // Returns whether true or false
+            return isElementVisible === !negate
         })
     }
 )

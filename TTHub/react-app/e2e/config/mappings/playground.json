@@ -2,5 +2,6 @@
     "female" : "[value='female']",
     "female label" : "[data-id='female-radio-button']",
     "male" : "[value='male']", 
-    "male label": "[data-id='male-radio-button']"
+    "male label": "[data-id='male-radio-button']",
+    "movies" : "[id='movies-input']"
 }
