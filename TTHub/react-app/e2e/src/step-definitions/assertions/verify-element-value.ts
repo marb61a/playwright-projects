@@ -50,7 +50,7 @@ Then(
 
 Then(
     /^the "([^"]*)" should( not)? contain the value "(.*)"$/,
-    async function(elementKey: ElementKey, negate: boolean, elementValue: string) {
+    async function(this: ScenarioWorld, elementKey: ElementKey, negate: boolean, elementValue: string) {
         const {
             screen: {page},
             globalConfig
@@ -62,6 +62,25 @@ Then(
         await waitFor(async() => {
             const elementAttributes = await getValue(page, elementIdentifier)
             return elementAttributes?.includes(elementValue) === !negate
+        })
+    }
+)
+
+// Testing the required text box on the playground page
+Then(
+    /^the "([^"]*)" should( not)? equal the value "(.*)"$/,
+    async function(this: ScenarioWorld, elementKey: ElementKey, negate: boolean, elementValue: string) {
+        const {
+            screen: {page},
+            globalConfig
+        } = this
+
+        console.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        await(async() => {
+            const elementAttribute = await getValue(page, elementIdentifier)
+            return (elementAttribute === elementValue) === !negate 
         })
     }
 )
