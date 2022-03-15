@@ -33,3 +33,14 @@ export const checkElement = async(
 ): Promise<void> => {
     await page.check(elementIdentifier)
 }
+
+export const getValue = async(
+    page: Page,
+    elementIdentifier: ElementLocator
+): Promise<string | null> => {
+    const value = await page.$eval<string, HTMLSelectElement>(elementIdentifier, el => {
+        return el.value
+    })
+
+    return value
+}

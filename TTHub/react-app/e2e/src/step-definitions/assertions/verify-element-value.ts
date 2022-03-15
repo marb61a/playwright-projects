@@ -4,6 +4,7 @@ import { ElementKey } from '../../env/global'
 import { getElementLocator } from '../../support/web-element-helper'
 import {ScenarioWorld} from '../setup/world'
 import { waitFor } from '../../support/wait-for-behaviour'
+import { getValue } from '../../support/html-behaviour'
 
 Then(
     /^the "([^"]*)" should( not)? contain the text "(.*)"$/,
@@ -43,6 +44,24 @@ Then(
             const elementText = (await page.textContent(elementIdentifier))
             // Return will verify whether true or false
             return (elementText === expectedElementText) === !negate
+        })
+    }
+)
+
+Then(
+    /^the "([^"]*)" should( not)? contain the value "(.*)"$/,
+    async function(elementKey: ElementKey, negate: boolean, elementValue: string) {
+        const {
+            screen: {page},
+            globalConfig
+        } = this
+
+        console.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        await waitFor(async() => {
+            const elementAttributes = await getValue(page, elementIdentifier)
+            return elementAttributes?.includes(elementValue) === !negate
         })
     }
 )
