@@ -41,7 +41,9 @@ const common = `./src/features/**/*.feature \
                 --require ./src/step-definitions/**/**/*.ts \
                 --world-parameters ${JSON.stringify(worldParameters)} \
                 -f json:./reports/reports.json \
-                --format progress-bar`
+                --format progress-bar\
+                --parallel ${env('PARALLEL')}\
+                --retry ${env('RETRY')}`
 
 // Creates profiles for different test situations (Previously in package.json scripts)
 const dev = `${common} --tags '@dev'`
