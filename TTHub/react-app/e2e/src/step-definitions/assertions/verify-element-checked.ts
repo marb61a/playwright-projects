@@ -7,14 +7,14 @@ import { waitFor } from '../../support/wait-for-behaviour'
 
 Then(
     // Checks if the radio button is checked and also not checked when needed
-    /^the "([^"]*)" radio button should( not )? be checked $/,
+    /^the "([^"]*)" (?:check box|radio button) should( not )? be checked $/,
     async function (this: ScenarioWorld, elementKey: ElementKey, negate: boolean) {
         const {
             screen: { page},
             globalConfig
         } = this
         
-        console.log(`The ${elementKey} radio button should ${negate?'not':''}be checked`)
+        console.log(`The ${elementKey} check box | radio button should ${negate?'not ':''}be checked`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {

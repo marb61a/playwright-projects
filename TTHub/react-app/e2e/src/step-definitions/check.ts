@@ -7,7 +7,7 @@ import { waitFor } from '../support/wait-for-behaviour'
 import { checkElement } from '../support/html-behaviour'
 
 Then(
-    /^I check the "({^"}*)" radio button $/,
+    /^I check the "({^"}*)" (?:check box|radio button) $/,
     async function(this: ScenarioWorld, elementKey: ElementKey) {
         const {
             screen: { page},
