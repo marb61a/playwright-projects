@@ -78,9 +78,28 @@ Then(
         console.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
-        await(async() => {
+        await waitFor(async() => {
             const elementAttribute = await getValue(page, elementIdentifier)
             return (elementAttribute === elementValue) === !negate 
+        })
+    }
+)
+
+// Verifying that the outlined disabled input is disabled
+Then(
+    /^the "([^"]*)" should( not)? equal be enabled$/,
+    async function(this: ScenarioWorld, elementKey: ElementKey, negate: boolean) {
+        const {
+            screen: {page},
+            globalConfig
+        } = this
+
+        console.log(`The ${elementKey} should ${negate?'not':''}be enabled`)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        await waitFor(async() => {
+            const isElementEnabled = await page.isEnabled(elementIdentifier)
+            return isElementEnabled === !negate
         })
     }
 )
