@@ -27,3 +27,17 @@ Then(
         })
     }
 )
+
+// Asserts that iframe text does not exist
+Then(
+    /^the "([^"]*)" on the "([^"]*)" iframe should( not)? contain the text "(.*)"$/,
+    async function(
+        this: ScenarioWorld,
+        elementKey: ElementKey,
+        iframeName: string,
+        negate: boolean,
+        expectedElementText: string
+    ) {
+
+    }
+)
