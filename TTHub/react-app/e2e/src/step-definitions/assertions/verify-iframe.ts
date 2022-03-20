@@ -6,7 +6,7 @@ import {ScenarioWorld} from '../setup/world'
 import { waitFor } from '../../support/wait-for-behaviour'
 import { getIFrameElement } from '../../support/html-behaviour'
 
-// Asserts iframe value is displayed
+// Asserts iframe value is displayed or not (If negative is needed)
 Then(
     /^the "([^"]*)" on the "([^"]*)" iframe should( not)? be displayed$/,
     async function(this: ScenarioWorld, elementKey: ElementKey, iFrameName: string, negate: boolean) {
@@ -28,7 +28,7 @@ Then(
     }
 )
 
-// Asserts that iframe text does not exist
+// Asserts that iframe text is contained (Or not contained in negative version)
 Then(
     /^the "([^"]*)" on the "([^"]*)" iframe should( not)? contain the text "(.*)"$/,
     async function(
@@ -38,6 +38,25 @@ Then(
         negate: boolean,
         expectedElementText: string
     ) {
+        const {
+            screen: { page },
+            globalConfig
+        } = this
 
+        console.log(`the ${elementKey} should ${negate?'not ':'' }contain the text ${expectedElementText}`)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+        const iframeIdentifier = getElementLocator(page, iframeName, globalConfig)
+        const elementIframe = await getIFrameElement(page, iframeIdentifier)
+
+        await waitFor(async() => {
+            const elementText = await elementIframe?.textContent(elementIdentifier)
+            return elementText?.includes(expectedElementText) === !negate 
+        })
     }
+)
+
+// Asserts that text is equal (or not if using the negative version)
+Then(
+    /^the "([^"]*)" on the "([^"]*)" iframe should( not)? equal the text "(.*)"$/,
+    async function()
 )
