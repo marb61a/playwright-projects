@@ -58,5 +58,26 @@ Then(
 // Asserts that text is equal (or not if using the negative version)
 Then(
     /^the "([^"]*)" on the "([^"]*)" iframe should( not)? equal the text "(.*)"$/,
-    async function()
+    async function(
+        this: ScenarioWorld,
+        elementKey: ElementKey,
+        iframeName: string,
+        negate: boolean,
+        expectedElementText: string
+    ) {
+        const {
+            screen: { page },
+            globalConfig
+        } = this
+
+        console.log(`the ${elementKey} should ${negate?'not ':'' }equal the text ${expectedElementText}`)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+        const iframeIdentifier = getElementLocator(page, iframeName, globalConfig)
+        const elementIframe = await getIFrameElement(page, iframeIdentifier)
+
+        await waitFor(async() => {
+            const elementText = await elementIframe?.textContent(elementIdentifier)
+            return (elementText === expectedElementText) === !negate 
+        })
+    }
 )
