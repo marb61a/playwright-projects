@@ -1,6 +1,5 @@
 Feature: As a user I can interact woth IFrames
 
-    @dev
     @smoke
     @regression
     Scenario: As a I can interact and assert on IFrames
@@ -8,4 +7,13 @@ Feature: As a user I can interact woth IFrames
         And I click on the "playground" button
         When I am directed to the "playground" page
         And I fill in the "search" input on the "basic iframe" iframe with "Abraham Perry"
+        And the "contact" on the "basic iframe" iframe should be displayed
+        And the "full name label" on the "basic iframe" iframe should contain the text "Name:"
+        And the "name" on the "basic iframe" iframe should equal the text "Abraham Perry"
+        And the "gender label" on the "basic iframe" iframe should contain the text "Gender:"
+        And the "gender" on the "basic iframe" iframe should equal the text "Male"
+        And the "address label" on the "basic iframe" iframe should contain the text "Address:"
+        And the "address" on the "basic iframe" iframe should equal the text "Ap #826-8849 Vulputate Street, Laramie"
+        And the "edit" on the "basic iframe" iframe should be displayed
+        And the "delete" on the "basic iframe" iframe should be displayed
         
