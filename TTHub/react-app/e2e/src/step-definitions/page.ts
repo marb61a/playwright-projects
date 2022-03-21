@@ -15,6 +15,8 @@ Then(
         } = this
 
         console.log(`I fill in the ${elementKey} input on the ${elementPosition} tab|window with ${input}`)
+
+        
         const pageIndex = Number(elementPosition.match(/\d/g)?.join('')) - 1
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
