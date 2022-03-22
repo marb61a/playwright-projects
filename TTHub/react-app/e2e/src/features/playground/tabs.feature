@@ -1,4 +1,4 @@
-Feature: As a user I can interact woth tabs
+Feature: As a user I can interact with tabs
 
     @smoke
     @regression
