@@ -103,3 +103,11 @@ Then(
         })
     }
 )
+
+// Verifying button value
+Then(
+    /^the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" "([^"]*)" should( not)? contain the text "(.*)"$/,
+    async function(){
+        
+    }
+)

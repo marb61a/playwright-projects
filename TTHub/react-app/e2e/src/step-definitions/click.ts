@@ -1,7 +1,7 @@
 import { When } from '@cucumber/cucumber'
 
 import { ScenarioWorld } from './setup/world'
-import { clickElement } from '../support/html-behaviour'
+import { clickElement, clickElementAtIndex } from '../support/html-behaviour'
 import { waitFor } from '../support/wait-for-behaviour'
 import { getElementLocator } from '../support/web-element-helper'
 import { ElementKey } from '../env/global'
