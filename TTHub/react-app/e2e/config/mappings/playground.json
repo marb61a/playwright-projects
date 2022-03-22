@@ -1,9 +1,9 @@
 {
-    "female" : "[value='female']",
-    "female label" : "[data-id='female-radio-button']",
-    "male" : "[value='male']", 
+    "female": "[value='female']",
+    "female label": "[data-id='female-radio-button']",
+    "male": "[value='male']", 
     "male label": "[data-id='male-radio-button']",
-    "movies" : "[id='movies-input']",
+    "movies": "[id='movies-input']",
     "the godfather": "//li[text()='The Godfather']",
     "outlined required": "[id='outlined-required']",
     "outlined disabled": "[id='outlined-disabled']",
@@ -17,5 +17,8 @@
     "red": "[data-id='red-radio-button']",
     "basic iframe": "[id='basic-iframe']",
     "new tab": "[data-id='new-tab-button']",
-    "open window": "[data-id='open-window-button']"
+    "open window": "[data-id='open-window-button']",
+    "primary": "[data-id='primary-button']",
+    "secondary": "[data-id='secondary-button']",
+    "third": "[data-id='third-button']"
 }
