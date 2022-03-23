@@ -15,5 +15,17 @@ Then(
 
         console.log(`The ${elementKey} table should ${negate?'not':''}equal the following:`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        // Retrieve table with table broken into array of strings
+        const dataBefore = await page.$$eval(elementIdentifier+"tbody tr", (rows) => {
+            return rows.map(row => {
+                const cells = row.querySelectorAll('td')
+                return Array.from(cells).map(cell => cell.textContent)
+            })
+        })
+
+        await waitFor(async () => {
+            return JSON.stringify(dataBefore) === JSON.stringify(dataTable.raw()) === !negate
+        })
     }
 )
