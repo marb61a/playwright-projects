@@ -91,3 +91,13 @@ export const inputValueOnIframe = async(
 ): Promise<void> => {
     await elementIframe.fill(elementIdentifier, inputValue)
 }
+
+// When asserting on attribute text
+export const getAttributeText = async(
+    page: Page,
+    elementIdentifier: ElementLocator,
+    attribute: string
+): Promise<string | null> => {
+    const attributeText = page.locator(elementIdentifier).getAttribute(attribute)
+    return attributeText
+}
