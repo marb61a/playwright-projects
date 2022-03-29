@@ -29,3 +29,29 @@ Then(
         })
     }
 )
+
+// Contain step for stored variables
+Then(
+    /^the "([^"]*)" should( not)? contain the "([^"]*)" stored in global values$/,
+    async function(
+        this: ScenarioWorld,
+        elementKey: ElementKey,
+        negate: boolean,
+        variableKey: string
+    ) {
+        const {
+            screen: {page},
+            globalConfig,
+            globalVariables
+        } = this
+
+        console.log(`The ${elementKey} should ${negate?'not ':''} contain the ${globalVariables[variableKey]} stored in global variables`)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        await waitFor(async() => {
+            const elementText = await page.textContent(elementIdentifier)
+            const variableValue = globalVariables[variableKey]
+            return elementText?.includes(variableValue) === !negate
+        }) 
+    }
+)
