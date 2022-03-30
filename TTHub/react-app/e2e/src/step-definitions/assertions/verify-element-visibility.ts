@@ -6,7 +6,7 @@ import {ScenarioWorld} from '../setup/world'
 import { waitFor } from '../../support/wait-for-behaviour'
 
 Then(
-    /^the "([^"]*)" should( not)? be displayed/,
+    /^the "([^"]*)" should( not)? be displayed$/,
     async function (this: ScenarioWorld, elementKey: ElementKey, negate: boolean) {
         const {
             screen: {page},
@@ -31,7 +31,7 @@ Then(
 
 // Enables working with indexes
 Then(
-    /^the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" "([^"]*)" should( not)? be displayed/,
+    /^the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" "([^"]*)" should( not)? be displayed$/,
     async function(
         this: ScenarioWorld,
         elementPosition: string,
@@ -51,5 +51,32 @@ Then(
             const isElementVisible = (await page.$(`${elementIdentifier}>>>nth=${index}`)) != null
             return isElementVisible === !negate
         }) 
+    }
+)
+
+// Checking if more than 1 of an element is displayed
+Then(
+    // "(\d*)" matches a digit
+    /^I should( not)? see "(\d*)" "([^"]*)" displayed$/,
+    async function(
+        this: ScenarioWorld,
+        count: string,
+        elementKey: ElementKey, 
+        negate: boolean
+    ) {
+        const {
+            screen: {page},
+            globalConfig
+        } = this
+
+        console.log(`I should ${negate?'not':''}see ${count} ${elementKey} displayed`)
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        await waitFor(async() => {
+            // $$ matches all elements matching specified selector, normal assumptions are that
+            // there will be multiple occurences of a selector on a page
+            const element = await page.$$(elementIdentifier)
+            return (Number(count) === element.length) === !negate
+        })
     }
 )
