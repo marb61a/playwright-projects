@@ -2,7 +2,8 @@ import { Given } from '@cucumber/cucumber'
 import {PageId} from '../env/global'
 import { 
     navigateToPage,
-    currentPathMatchesPageId
+    currentPathMatchesPageId,
+    reloadPage
 } from '../support/navigation-behaviour'
 import { waitFor } from '../support/wait-for-behaviour'
 import {ScenarioWorld} from './setup/world'
@@ -35,5 +36,24 @@ Given (
 
         // Stabilises the framework
         await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig))
+    }
+)
+
+// Reassert after a page refresh
+Given (
+    /^I refresh the "([^"]*)" page$/,
+    async function (this: ScenarioWorld, pageId: PageId) {
+        const {
+            screen: { page },
+            globalConfig
+        } = this
+
+        console.log(`I refresh the ${pageId} page`)
+
+        await reloadPage(page)
+
+        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig), {
+            timeout:20000
+        })
     }
 )

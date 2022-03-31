@@ -68,3 +68,8 @@ export const getCurrentPageId = (
 
     return currentPageId
 }
+
+// For reloading page to test data persistence after refresh
+export const reloadPage = async (page: Page): Promise<void> => {
+    await page.reload()
+}

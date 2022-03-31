@@ -38,7 +38,7 @@ Feature: As a user I expect to be able to create contacts
         And I select the "Male" option from the "gender"
         And I fill in the "phone" input with "223456789" 
         And I fill in the "street" input with "2 First Street"
-        And I fill in the "city" input with "Dubline"
+        And I fill in the "city" input with "Dublin"
         And I click on the "save" button
         And I am directed to the "home" page
 
