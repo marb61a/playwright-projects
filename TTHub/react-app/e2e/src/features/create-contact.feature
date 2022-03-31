@@ -26,7 +26,6 @@ Feature: As a user I expect to be able to create contacts
         And the "edit" should be displayed
         And the "delete" should be displayed 
     
-    @dev
     @smoke
     @regression
     Scenario: As a user I do not expect saved contacts to persist after a page refresh
