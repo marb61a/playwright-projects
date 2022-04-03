@@ -1,3 +1,5 @@
 {
-    "localhost": "http://localhost:3000"
+    "localhost": "http://localhost:3000",
+    "_comment":  "Will need url for production",
+    "production": "https://localhost:3000"
 }
