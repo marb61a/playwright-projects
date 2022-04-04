@@ -65,6 +65,10 @@ export const getValue = async(
     page: Page,
     elementIdentifier: ElementLocator
 ): Promise<string | null> => {
+    // Stabilises input feature which may look for elementIdentifier value before it is available
+    // This is because $eval will assert on an element straight away even if it has just changed which
+    // can be slightly flaky.
+    await page.waitForSelector(elementIdentifier)
     const value = await page.$eval<string, HTMLSelectElement>(elementIdentifier, el => {
         return el.value
     })
