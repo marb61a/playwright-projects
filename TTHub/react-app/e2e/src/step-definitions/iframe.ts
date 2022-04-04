@@ -17,9 +17,12 @@ Then(
         console.log(`I fill in the ${elementKey} input on the ${iFrameName} with ${inputValue}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
         const iframeIdentifier = getElementLocator(page, iFrameName, globalConfig)
-        const elementIframe = await getIFrameElement(page, iframeIdentifier)
 
         await waitFor(async() => {
+            // elementIframe needs to be inside waitFor as if it is outside then it may cause
+            // the test to fail if there is a slow connect, waitFor allows for retrying
+            const elementIframe = await getIFrameElement(page, iframeIdentifier)
+
             const result = await page.waitForSelector(iframeIdentifier, {
                 state: 'visible'
             })

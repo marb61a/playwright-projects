@@ -105,3 +105,11 @@ export const getAttributeText = async(
     const attributeText = page.locator(elementIdentifier).getAttribute(attribute)
     return attributeText
 }
+
+export const scrollIntoView = async(
+    page: Page,
+    elementIdentifier: ElementLocator
+): Promise<void> => {
+    const element = page.locator(elementIdentifier)
+    await element.scrollIntoViewIfNeeded()
+}
