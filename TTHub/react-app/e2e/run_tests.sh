@@ -5,4 +5,5 @@ env=$1
 tag=$2
 
 #run cucumber tests & on failure then run postcucumber
-yarn run cucumber --profile $tag || yarn run postcucumber
+#will know which environment to run
+yarn run cucumber:$env --profile $tag || yarn run postcucumber

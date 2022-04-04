@@ -13,7 +13,7 @@ import {
 
 dotenv.config({ path: env('COMMON_CONFIG_FILE')})
 // Retrieves the environmental variables depending on environment  (localhost or production)
-dotenv.config({ path: `${env('ENV_PATH')}${environment}`})
+dotenv.config({ path: `${env('ENV_PATH')}${environment}.env`})
 
 // Retrieves JSON mappings
 const hostsConfig: HostsConfig = getJsonFromFile(env('HOSTS_URLS_PATH')) 
