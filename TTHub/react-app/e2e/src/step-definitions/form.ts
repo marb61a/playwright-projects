@@ -1,5 +1,7 @@
 import { Then } from "@cucumber/cucumber";
+
 import { waitFor } from "../support/wait-for-behaviour";
+import { parseInput } from "../support/input-helper"
 import { getElementLocator } from "../support/web-element-helper";
 import { ScenarioWorld } from "./setup/world";
 import { ElementKey } from "../env/global";
@@ -22,7 +24,9 @@ Then(
             })
 
             if(result){
-                await inputValue(page, elementIdentifier, input)
+                // Will check to see if input has environmental variable values
+                const parsedInput = parseInput(input, globalConfig)
+                await inputValue(page, elementIdentifier, parsedInput)
             }
 
             return result
