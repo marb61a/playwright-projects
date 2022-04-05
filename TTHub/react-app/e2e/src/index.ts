@@ -1,15 +1,17 @@
 // Import file which holds environmental variable that need to be set
 import dotenv from 'dotenv' 
 import fs from "fs"
-const environment = env('NODE_ENV')
 
 import { env, getJsonFromFile } from './env/parseEnv'
 import {
     GlobalConfig,
     HostsConfig,
     PagesConfig,
+    EmailsConfig,
     PageElementMappings
 } from './env/global'
+
+const environment = env('NODE_ENV')
 
 dotenv.config({ path: env('COMMON_CONFIG_FILE')})
 // Retrieves the environmental variables depending on environment  (localhost or production)
@@ -18,6 +20,7 @@ dotenv.config({ path: `${env('ENV_PATH')}${environment}.env`})
 // Retrieves JSON mappings
 const hostsConfig: HostsConfig = getJsonFromFile(env('HOSTS_URLS_PATH')) 
 const pagesConfig: PagesConfig = getJsonFromFile(env('PAGE_URLS_PATH')) 
+const emailsConfig: EmailsConfig = getJsonFromFile(env('EMAILS_URLS_PATH'))
 
 const mappingFiles = fs.readdirSync(`${process.cwd()}${env('PAGE_ELEMENTS_PATH')}`)
 const pageElementMappings: PageElementMappings = mappingFiles.reduce(
@@ -35,6 +38,7 @@ const pageElementMappings: PageElementMappings = mappingFiles.reduce(
 const worldParameters: GlobalConfig = {
     hostsConfig,
     pagesConfig,
+    emailsConfig,
     pageElementMappings
 }
 
