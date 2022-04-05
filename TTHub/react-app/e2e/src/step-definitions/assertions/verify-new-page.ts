@@ -22,7 +22,7 @@ Then(
 
         // Regex converts the page number from string to number
         const pageIndex = Number(elementPosition.match(/\d/g)?.join('')) - 1
-        await page.waitForTimeout(1000)
+        await page.waitForTimeout(2000)
 
         await waitFor(async () => {
             let pages = context.pages()

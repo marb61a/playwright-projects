@@ -18,9 +18,10 @@ Then(
         console.log(`The ${elementKey} on the ${iFrameName} should ${negate?'not ':''} be displayed`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
         const iframeIdentifier = getElementLocator(page, iFrameName, globalConfig)
-        const elementIframe = await getIFrameElement(page, iframeIdentifier)
 
         await waitFor(async() => {
+            const elementIframe = await getIFrameElement(page, iframeIdentifier)
+
             // Check in iframe on current page if element is true or false
             const isElementVisible = (await elementIframe?.$(elementIdentifier)) != null
             return isElementVisible === !negate
