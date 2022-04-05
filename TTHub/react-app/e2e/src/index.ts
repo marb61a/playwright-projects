@@ -10,6 +10,7 @@ import {
     EmailsConfig,
     PageElementMappings
 } from './env/global'
+import { generateCucumberRuntimeTag } from './support/tag-helper'
 
 const environment = env('NODE_ENV')
 
@@ -23,6 +24,17 @@ const pagesConfig: PagesConfig = getJsonFromFile(env('PAGE_URLS_PATH'))
 const emailsConfig: EmailsConfig = getJsonFromFile(env('EMAILS_URLS_PATH'))
 
 const mappingFiles = fs.readdirSync(`${process.cwd()}${env('PAGE_ELEMENTS_PATH')}`)
+
+const getEnvList = (): string[] => {
+    const envList = Object.keys(hostsConfig)
+
+    if(envList.length === 0) {
+        throw Error(`No environments mapped in your ${env('HOSTS_URLS_PATH')}`)
+    }
+
+    return envList
+}
+
 const pageElementMappings: PageElementMappings = mappingFiles.reduce(
     (pageElementConfigAcc, file) => {
         const key = file.replace('.json', '')
@@ -53,7 +65,7 @@ const common = `./src/features/**/*.feature \
                 --retry ${env('RETRY')}`
 
 // Creates profiles for different test situations (Previously in package.json scripts)
-const dev = `${common} --tags '@dev'`
+const dev = generateCucumberRuntimeTag(common, environment, getEnvList(), 'dev')
 const smoke = `${common} --tags '@smoke'`
 const regression = `${common} --tags '@regression'`
 
