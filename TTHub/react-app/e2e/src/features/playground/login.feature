@@ -29,6 +29,11 @@ Feature: As a user I can interact with login forms
         And I click on the "playground" button
         When I am directed to the "playground" page
         And I fill in the "email" input with "email"
+        And I fill in the "password" input with "Password1234"
+        And the "email error" should contain the text "Please include an '@' in the email address."
 
     Examples:
-    
+    | email          |
+    | martin.martin  |
+    | martin.example |
+    | martin         |

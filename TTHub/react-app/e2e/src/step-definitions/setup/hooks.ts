@@ -1,6 +1,8 @@
 import {Before, After, ITestCaseHookParameter, setDefaultTimeout} from "@cucumber/cucumber";
+
 import { env, envNumber } from '../../env/parseEnv';
 import { ScenarioWorld } from './world'
+import { getViewPort } from '../../support/browser-behaviour'
 
 setDefaultTimeout(envNumber('SCRIPT_TIMEOUT'))
 
@@ -8,6 +10,7 @@ Before(async function (this: ScenarioWorld, scenario: ITestCaseHookParameter) {
     console.log(`Running the cucumber scenario ${scenario.pickle.name}`)
 
     const contextOptions = {
+        viewport: getViewPort(),
         // Needed to stop firefox https errors
         ignoreHTTPSErrors: true,
         recordVideo: {
