@@ -66,8 +66,8 @@ const common = `./src/features/**/*.feature \
 
 // Creates profiles for different test situations (Previously in package.json scripts)
 const dev = generateCucumberRuntimeTag(common, environment, getEnvList(), 'dev')
-const smoke = `${common} --tags '@smoke'`
-const regression = `${common} --tags '@regression'`
+const smoke = generateCucumberRuntimeTag(common, environment, getEnvList(), 'smoke')
+const regression = generateCucumberRuntimeTag(common, environment, getEnvList(), 'regression')
 
 
 export { dev, smoke, regression }

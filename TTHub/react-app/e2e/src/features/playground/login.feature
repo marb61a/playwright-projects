@@ -1,6 +1,5 @@
 Feature: As a user I can interact with login forms
 
-    @dev
     @smoke
     @regression
     Scenario Outline: As a user I can populate login details leveraging environmental variables
@@ -21,3 +20,15 @@ Feature: As a user I can interact with login forms
     Examples:
         | password  |
         | 4S42xAr12 |
+
+    @dev
+    @smoke
+    @regression
+    Scenario Outline: As a user I expect validation on the login input for an incorrect email
+        Given I am on the "home" page
+        And I click on the "playground" button
+        When I am directed to the "playground" page
+        And I fill in the "email" input with "email"
+
+    Examples:
+    
