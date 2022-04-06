@@ -16,7 +16,7 @@ Given(
             globalConfig
         } = this
 
-        console.log(`I am on the ${pageId} page`);
+        logger.log(`I am on the ${pageId} page`);
 
         await navigateToPage(page, pageId, globalConfig)
 
