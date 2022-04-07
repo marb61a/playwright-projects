@@ -16,6 +16,22 @@ type Logger = {
 
 let loggerSingleton: Logger | null = null
 
+// Sets the log function to use the console object, if log level is on and more than
+// 1 and the message is not empty then the console is called
+const logFuncAtLevels = (logLevels: LogLevel[], logFunction: Logger = console) =>
+    (logLevel: LogLevel, ...msg: any[]) => {
+        if(logLevel != OFF && logLevels.indexOf(logLevel) !== -1 && msg.length > 0) {
+            logFunction[logLevel](...msg)
+        }
+    }
+
+const getLogLevel = (logLevel: LogLevel): LogLevel[] => {
+    const dynamicLogLevelIndex = LOG_LEVELS.indexOf(logLevel)
+    return LOG_LEVELS.slice(dynamicLogLevelIndex)
+}
+
+// Determines which logs to produce, this will be either debug, error or log
+// It uses the logFuncAtLevels function which is the console object to output desired logs
 const createLogger = (logLevel: LogLevel): Logger => {
     const activeLogLevels = getLogLevel(logLevel)
     const logger = logFuncAtLevels(activeLogLevels)
@@ -26,7 +42,8 @@ const createLogger = (logLevel: LogLevel): Logger => {
             [level]: (...msg: any[]) => logger(level, ...msg)
         }),
         {}
-    )
+    ) as Logger
+
 }
 
 export const logLevelIsT = <T extends string>(logLevel: string, options: readonly string[]): logLevel is T => {
