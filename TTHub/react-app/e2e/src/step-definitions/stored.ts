@@ -18,7 +18,7 @@ Then(
             globalVariables
         } = this
 
-        console.log(`I retrieve the ${elementKey} text and store it as ${variableKey} in global variables`)
+        logger.log(`I retrieve the ${elementKey} text and store it as ${variableKey} in global variables`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {

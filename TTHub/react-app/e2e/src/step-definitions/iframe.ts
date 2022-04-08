@@ -14,7 +14,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`I fill in the ${elementKey} input on the ${iFrameName} with ${inputValue}`)
+        logger.log(`I fill in the ${elementKey} input on the ${iFrameName} with ${inputValue}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
         const iframeIdentifier = getElementLocator(page, iFrameName, globalConfig)
 

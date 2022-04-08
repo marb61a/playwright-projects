@@ -14,7 +14,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         switch (_context.prev = _context.next) {
           case 0:
             page = this.screen.page;
-            console.log("I am on the ".concat(pageId, " page"));
+            logger.log("I am on the ".concat(pageId, " page"));
             _context.next = 4;
             return page.goto("http://localhost:3000/");
 

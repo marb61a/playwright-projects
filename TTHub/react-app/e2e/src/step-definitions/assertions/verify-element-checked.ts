@@ -14,7 +14,7 @@ Then(
             globalConfig
         } = this
         
-        console.log(`The ${elementKey} check box | radio button should ${negate?'not ':''}be checked`)
+        logger.log(`The ${elementKey} check box | radio button should ${negate?'not ':''}be checked`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {

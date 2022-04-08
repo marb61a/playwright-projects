@@ -13,7 +13,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`The ${elementKey} table should ${negate?'not':''}equal the following:`)
+        logger.log(`The ${elementKey} table should ${negate?'not':''}equal the following:`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async () => {

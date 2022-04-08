@@ -1,4 +1,5 @@
 import { Given } from '@cucumber/cucumber'
+
 import {PageId} from '../env/global'
 import { 
     navigateToPage,
@@ -7,6 +8,7 @@ import {
 } from '../support/navigation-behaviour'
 import { waitFor } from '../support/wait-for-behaviour'
 import {ScenarioWorld} from './setup/world'
+import { logger } from'../logger'
 
 Given(
     /^I am on the "([^"]*)" page$/,
@@ -32,7 +34,7 @@ Given (
             globalConfig
         } = this
 
-        console.log(`I am directed to the ${pageId} page`)
+        logger.log(`I am directed to the ${pageId} page`)
 
         // Stabilises the framework
         await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig))
@@ -48,7 +50,7 @@ Given (
             globalConfig
         } = this
 
-        console.log(`I refresh the ${pageId} page`)
+        logger.log(`I refresh the ${pageId} page`)
 
         await reloadPage(page)
 

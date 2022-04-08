@@ -7,6 +7,6 @@ Then(/^I wait "([^"]*)" seconds?$/, async function (this: ScenarioWorld, waitSec
         screen: { page },
     } = this;
 
-    console.log(`I wait ${waitSeconds} seconds`);
+    logger.log(`I wait ${waitSeconds} seconds`);
     await page.waitForTimeout(parseInt(waitSeconds, 10) * 1000);
 });

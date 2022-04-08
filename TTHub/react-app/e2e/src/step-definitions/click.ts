@@ -13,7 +13,7 @@ When (/^I click the "({^"}*)" (?:button|link|icon|element)$/,
             globalConfig
         } = this
 
-        console.log(`I click the ${elementKey} (?:button|link|icon|element|radio button)`)
+        logger.log(`I click the ${elementKey} (?:button|link|icon|element|radio button)`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
@@ -40,7 +40,7 @@ When(
             globalConfig
         } = this
 
-        console.log(`I click the ${elementPosition} ${elementKey} (?:button|link|icon|element|radio button)`)
+        logger.log(`I click the ${elementPosition} ${elementKey} (?:button|link|icon|element|radio button)`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
         const pageIndex = Number(elementPosition.match(/\d/g)?.join('')) - 1
 

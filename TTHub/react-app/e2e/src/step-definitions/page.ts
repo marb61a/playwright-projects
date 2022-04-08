@@ -14,7 +14,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`I fill in the ${elementKey} input on the ${elementPosition} tab|window with ${input}`)
+        logger.log(`I fill in the ${elementKey} input on the ${elementPosition} tab|window with ${input}`)
 
         
         const pageIndex = Number(elementPosition.match(/\d/g)?.join('')) - 1

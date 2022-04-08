@@ -14,7 +14,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`I scroll to the ${elementKey}`)
+        logger.log(`I scroll to the ${elementKey}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {

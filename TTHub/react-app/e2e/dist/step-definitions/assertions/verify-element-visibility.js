@@ -16,7 +16,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         switch (_context.prev = _context.next) {
           case 0:
             page = this.screen.page;
-            console.log("the ".concat(elementKey, " should contain the text ").concat(expectedElementText));
+            logger.log("the ".concat(elementKey, " should contain the text ").concat(expectedElementText));
             _context.next = 4;
             return page.textContent("[data-id='contacts']");
 
@@ -44,7 +44,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         switch (_context2.prev = _context2.next) {
           case 0:
             page = this.screen.page;
-            console.log("The ".concat(elementKey, " should be displayed"));
+            logger.log("The ".concat(elementKey, " should be displayed"));
             locator = page.locator("[data-id='header-logo']");
             _context2.next = 5;
             return (0, _test.expect)(locator).toBeVisible();

@@ -19,7 +19,7 @@ Then(
             globalVariables
         } = this
 
-        console.log(`The ${elementKey} should ${negate?'not ':''} equal the ${globalVariables[variableKey]} stored in global variables`)
+        logger.log(`The ${elementKey} should ${negate?'not ':''} equal the ${globalVariables[variableKey]} stored in global variables`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {
@@ -45,7 +45,7 @@ Then(
             globalVariables
         } = this
 
-        console.log(`The ${elementKey} should ${negate?'not ':''} contain the ${globalVariables[variableKey]} stored in global variables`)
+        logger.log(`The ${elementKey} should ${negate?'not ':''} contain the ${globalVariables[variableKey]} stored in global variables`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {

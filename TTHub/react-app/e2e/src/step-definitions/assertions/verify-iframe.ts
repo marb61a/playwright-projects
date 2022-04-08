@@ -5,6 +5,7 @@ import { getElementLocator } from '../../support/web-element-helper'
 import {ScenarioWorld} from '../setup/world'
 import { waitFor } from '../../support/wait-for-behaviour'
 import { getIFrameElement } from '../../support/html-behaviour'
+import { logger } from '../../logger'
 
 // Asserts iframe value is displayed or not (If negative is needed)
 Then(
@@ -15,7 +16,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`The ${elementKey} on the ${iFrameName} should ${negate?'not ':''} be displayed`)
+        logger.log(`The ${elementKey} on the ${iFrameName} should ${negate?'not ':''} be displayed`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
         const iframeIdentifier = getElementLocator(page, iFrameName, globalConfig)
 
@@ -44,7 +45,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`the ${elementKey} should ${negate?'not ':'' }contain the text ${expectedElementText}`)
+        logger.log(`the ${elementKey} should ${negate?'not ':'' }contain the text ${expectedElementText}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
         const iframeIdentifier = getElementLocator(page, iframeName, globalConfig)
 
@@ -72,7 +73,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`the ${elementKey} should ${negate?'not ':'' }equal the text ${expectedElementText}`)
+        logger.log(`the ${elementKey} should ${negate?'not ':'' }equal the text ${expectedElementText}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
         const iframeIdentifier = getElementLocator(page, iframeName, globalConfig)
 

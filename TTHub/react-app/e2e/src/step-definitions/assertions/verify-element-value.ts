@@ -5,6 +5,7 @@ import { getElementLocator } from '../../support/web-element-helper'
 import {ScenarioWorld} from '../setup/world'
 import { waitFor } from '../../support/wait-for-behaviour'
 import { getValue, getAttributeText } from '../../support/html-behaviour'
+import { logger } from '../../logger'
 
 Then(
     /^the "([^"]*)" should( not)? contain the text "(.*)"$/,
@@ -14,13 +15,18 @@ Then(
             globalConfig
         } = this
 
-        console.log(`the ${elementKey} should ${negate?'not':''} contain the text ${expectedElementText}`)
+        logger.log(`the ${elementKey} should ${negate?'not':''} contain the text ${expectedElementText}`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         // Expect from playwright does not work well with custom waitFor functionality so is replaced
         await waitFor(async() => {
             const elementText = (await page.textContent(elementIdentifier))
+
+            // Adding debug logs
+            logger.debug("elementText", elementText)
+            logger.debug("expectedElementText", expectedElementText)
+
             // Return will verify whether true or false
             return elementText?.includes(expectedElementText) === !negate
         })
@@ -36,7 +42,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`the ${elementKey} should ${negate?'not':''} equal the text ${expectedElementText}`)
+        logger.log(`the ${elementKey} should ${negate?'not':''} equal the text ${expectedElementText}`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
@@ -56,7 +62,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`)
+        logger.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {
@@ -75,7 +81,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`)
+        logger.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {
@@ -94,7 +100,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`The ${elementKey} should ${negate?'not':''}be enabled`)
+        logger.log(`The ${elementKey} should ${negate?'not':''}be enabled`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {
@@ -119,7 +125,7 @@ Then(
             globalConfig
         } = this
 
-        console.log(`The ${elementPosition} ${elementKey} should ${negate?'not':''}contain the text ${expectedElementText}`)
+        logger.log(`The ${elementPosition} ${elementKey} should ${negate?'not':''}contain the text ${expectedElementText}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         // Regex converts the page number from string to number
@@ -147,7 +153,7 @@ Then(
             globalConfig
         } = this
         
-        console.log(`The ${elementKey} ${attribute} should ${negate?'not':''}contain the text ${expectedElementText}`)
+        logger.log(`The ${elementKey} ${attribute} should ${negate?'not':''}contain the text ${expectedElementText}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {
