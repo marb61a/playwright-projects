@@ -1,7 +1,13 @@
-import { Page } from "playwright";
+import { Page, Frame } from "playwright";
 
-import { ElementLocator } from "../env/global";
+import { 
+    ElementLocator,
+    GlobalConfig,
+    WaitForTarget,
+    WaitForTargetType
+} from "../env/global";
 import { envNumber } from "../env/parseEnv";
+import {handleError} from "./error-helper";
 import { logger } from "../logger";
 
 // Surrounds an assertion
@@ -64,4 +70,21 @@ export const waitForSelectorOnPage = async(
     } catch (e) {
         return false
     }
+}
+
+export const waitForSelectorInIframe = async(
+    elementIframe: Frame,
+    elementIdentifier: ElementLocator,
+): Promise<boolean> => {
+  try {
+    await elementIframe?.waitForSelector(elementIdentifier, {
+      state: 'visible',
+      timeout: envNumber('SELECTOR_TIMEOUT')
+    })
+    
+    return true
+  } catch (e) {
+    return false
+  }
+
 }
