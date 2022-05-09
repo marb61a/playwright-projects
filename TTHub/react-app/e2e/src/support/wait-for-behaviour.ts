@@ -10,6 +10,17 @@ import { envNumber } from "../env/parseEnv";
 import {handleError} from "./error-helper";
 import { logger } from "../logger";
 
+export const enum waitForResult {
+    PASS = 1,
+    FAIL = 2,
+    ELEMENT_NOT_AVAILABLE=3
+}
+
+export type waitForResultWithContext = {
+    result: waitForResult
+    replace?: string
+}
+
 // Surrounds an assertion
 export const waitFor = async <T>(
     predicate: () => T | Promise <T>, 
@@ -81,7 +92,7 @@ export const waitForSelectorInIframe = async(
       state: 'visible',
       timeout: envNumber('SELECTOR_TIMEOUT')
     })
-    
+
     return true
   } catch (e) {
     return false
