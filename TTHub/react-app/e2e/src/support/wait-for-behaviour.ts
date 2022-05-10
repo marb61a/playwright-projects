@@ -44,7 +44,28 @@ export const waitFor = async <T>(
     let notAvailableContext: string | undefined
 
     try {
-        
+        while(new Date().getTime() - startDate.getTime() < timeout){
+            const result = await predicate();
+            let resultAs: waitForResult
+
+            if((result as waitForResultWithContext).result) {
+                notAvailableContext = (result as waitForResultWithContext).replace
+                resultAs = (result as waitForResultWithContext).result
+            } else {
+                resultAs = result as waitForResult
+            }
+
+            if(resultAs === waitForResult.PASS) {
+                return
+            } else if(resultAs === waitForResult.FAIL) {
+                throw new Error(options?.failureMessage || "Test assertion failed")
+            }
+    
+            await sleep(wait)
+            logger.log(`Waiting ${wait}ms`)
+        }
+    
+        throw new Error(`Wait time of ${timeout}ms for ${notAvailableContext || target} exceeded`)
     } catch (error) {
         handleError(globalConfig.errorsConfig, error as Error, target, type)
     }
