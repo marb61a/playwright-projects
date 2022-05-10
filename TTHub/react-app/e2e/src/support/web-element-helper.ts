@@ -18,5 +18,11 @@ export const getElementLocator = (
 
     
     // If the current page does not exist then try use the common json mapping file
-    return pageElementMappings[currentPage]?.[elementKey] || pageElementMappings.common[elementKey]
+    const elementIdentifier = pageElementMappings[currentPage]?.[elementKey] || pageElementMappings.common[elementKey]
+
+    if (!elementIdentifier) {
+        throw Error(`Unable to find the ${elementKey} mapping`)
+    }
+
+    return elementIdentifier
 }

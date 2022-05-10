@@ -57,7 +57,7 @@ export const stringIsOfOptions = <T extends string> (logLevel: string, options: 
         return logLevel as T
     }
 
-    throw Error(`Logger '${logLevel}' needs to be one of`)
+    throw Error(`Logger '${logLevel}' needs to be one of ${options}`)
 }
 
 export const getLogger= (): Logger => {

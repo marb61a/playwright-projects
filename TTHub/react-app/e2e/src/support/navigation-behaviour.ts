@@ -1,5 +1,7 @@
 import { Page } from 'playwright'
-import {GlobalConfig, PageId} from '../env/global'
+
+import {GlobalConfig, GlobalVariables, PageId} from '../env/global'
+import { waitForResult } from "./wait-for-behaviour"
 
 export const navigateToPage = async (
     page: Page,
@@ -13,14 +15,10 @@ export const navigateToPage = async (
     } = process.env
 
     const hostPath = hostsConfig[`${hostName}`]
-    logger.log("hostpath ", hostPath)
-
     const url = new URL(hostPath)
-    logger.log("url ", url)
 
     const pagesConfigItem = pagesConfig[pageId]
     url.pathname = pagesConfigItem.route
-    logger.log("Pages route ", url.pathname)
 
     await page.goto(url.href)
 }
@@ -41,10 +39,14 @@ export const currentPathMatchesPageId = (
     page: Page,
     pageId: PageId,
     globalConfig: GlobalConfig
-): boolean => {
+): waitForResult => {
     // URL is a TS built in function to handle dealing with URL's
     const { pathname: currentPath} = new URL(page.url())
-    return pathMatchesPageId(currentPath, pageId, globalConfig)
+    if(pathMatchesPageId(currentPath, pageId, globalConfig)) {
+        return waitForResult.PASS
+    }
+
+    return waitForResult.ELEMENT_NOT_AVAILABLE
 }
 
 export const getCurrentPageId = (

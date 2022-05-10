@@ -23,30 +23,31 @@ export type waitForResultWithContext = {
 
 // Surrounds an assertion
 export const waitFor = async <T>(
-    predicate: () => T | Promise <T>, 
+    predicate: () => waitForResult | Promise<waitForResult> | waitForResultWithContext | Promise<waitForResultWithContext>, 
+    globalConfig: GlobalConfig,
     // Question mark operator shows variable is optional !!
     options?: {
         timeout?:number;
         wait?:number;
+        target?: WaitForTarget; 
+        type?: WaitForTargetType, 
+        failureMessage?: string
     }
-): Promise<T> => {
+): Promise<void> => {
     const {
-        timeout= 20000, wait=2000
+        timeout= 20000, wait=2000, target = '', type = 'element'
     } = options || {}
 
     // New sleep resolves the promise
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
     const startDate = new Date()
+    let notAvailableContext: string | undefined
 
-    while(new Date().getTime() - startDate.getTime() < timeout){
-        const result = await predicate();
-        if(result) return result
-
-        await sleep(wait)
-        logger.log(`Waiting ${wait}ms`)
+    try {
+        
+    } catch (error) {
+        handleError(globalConfig.errorsConfig, error as Error, target, type)
     }
-
-    throw new Error(`Wait time of ${timeout} exceeded`)
 }
 
 export const waitForSelector = async(
