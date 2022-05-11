@@ -78,16 +78,7 @@ export const getTextWithinIframeElement = async (
     return textOnIframeElement
 }
 
-export const inputValue = async (
-    page: Page,
-    elementIdentifier: ElementLocator,
-    input: string
-): Promise <void> => {
-    // Focuses on the input which is best practice when dealing with an input
-    await page.focus(elementIdentifier)
-    await page.fill(elementIdentifier, input)
-}
-
+// Page Section
 export const inputValueOnPage = async (
     pages: Array<Page>,
     pageIndex: number,
@@ -97,6 +88,17 @@ export const inputValueOnPage = async (
     await pages[pageIndex].focus(elementIdentifier)
     await pages[pageIndex].fill(elementIdentifier, input)
 }
+
+export const getTitleWithinPage = async (
+    page: Page,
+    pages: Array<Page>,
+    pageIndex: number,
+): Promise<string | null> => {
+    const titleWithinPage = await pages[pageIndex].title()
+
+    return titleWithinPage
+}
+
 
 export const selectElementValue = async (
     page: Page,
