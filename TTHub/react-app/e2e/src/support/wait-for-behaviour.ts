@@ -109,15 +109,14 @@ export const waitForSelectorInIframe = async(
     elementIframe: Frame,
     elementIdentifier: ElementLocator,
 ): Promise<boolean> => {
-  try {
-    await elementIframe?.waitForSelector(elementIdentifier, {
-      state: 'visible',
-      timeout: envNumber('SELECTOR_TIMEOUT')
+    try {
+        await elementIframe?.waitForSelector(elementIdentifier, {
+            state: 'visible',
+            timeout: envNumber('SELECTOR_TIMEOUT')
     })
 
     return true
-  } catch (e) {
-    return false
-  }
-
+    } catch (e) {
+        return false
+    }
 }

@@ -1,6 +1,8 @@
 import { Frame, Page } from 'playwright'
 import { ElementLocator } from '../env/global'
+import {ElementHandle} from "@playwright/test"
 
+// Click Section
 export const clickElement = async (
     page: Page,
     elementIdentifier: ElementLocator
@@ -16,6 +18,38 @@ export const clickElementAtIndex = async(
     // nth allows for selecting 1 or more elements based on source order according to a formula
     const element = await page.$(`${elementIdentifier}>>nth=${elementPosition}`)
     await element?.click()
+}
+
+// Check Section
+export const checkElement = async(
+    page: Page,
+    elementIdentifier: ElementLocator
+): Promise<void> => {
+    await page.check(elementIdentifier)
+}
+
+export const uncheckElement = async(
+    page: Page,
+    elementIdentifier: ElementLocator
+): Promise<void> => {
+    await page.uncheck(elementIdentifier)
+}
+
+export const elementChecked = async (
+    page: Page,
+    elementIdentifier: ElementLocator,
+): Promise<boolean | null> => {
+    const checked = await page.isChecked(elementIdentifier)
+    return checked
+}
+
+// IFrame Section
+export const inputValueOnIframe = async(
+    elementIframe: Frame,
+    elementIdentifier: ElementLocator,
+    inputValue: string
+): Promise<void> => {
+    await elementIframe.fill(elementIdentifier, inputValue)
 }
 
 export const inputValue = async (
@@ -38,62 +72,13 @@ export const inputValueOnPage = async (
     await pages[pageIndex].fill(elementIdentifier, input)
 }
 
-export const selectValue = async (
+export const selectElementValue = async (
     page: Page,
     elementIdentifier: ElementLocator,
     option: string
 ): Promise <void> => {
     await page.focus(elementIdentifier)
     await page.selectOption(elementIdentifier, option)
-}
-
-export const checkElement = async(
-    page: Page,
-    elementIdentifier: ElementLocator
-): Promise<void> => {
-    await page.check(elementIdentifier)
-}
-
-export const uncheckElement = async(
-    page: Page,
-    elementIdentifier: ElementLocator
-): Promise<void> => {
-    await page.uncheck(elementIdentifier)
-}
-
-export const getValue = async(
-    page: Page,
-    elementIdentifier: ElementLocator
-): Promise<string | null> => {
-    // Stabilises input feature which may look for elementIdentifier value before it is available
-    // This is because $eval will assert on an element straight away even if it has just changed which
-    // can be slightly flaky.
-    await page.waitForSelector(elementIdentifier)
-    const value = await page.$eval<string, HTMLSelectElement>(elementIdentifier, el => {
-        return el.value
-    })
-
-    return value
-}
-
-// Get Iframe element
-export const getIFrameElement = async(
-    page: Page,
-    iframeIdentifier: ElementLocator
-): Promise<Frame | undefined | null> => {
-    await page.waitForSelector(iframeIdentifier)
-
-    const elementHandle = await page.$(iframeIdentifier)
-    const elementIframe = await elementHandle?.contentFrame()
-    return elementIframe
-}
-
-export const inputValueOnIframe = async(
-    elementIframe: Frame,
-    elementIdentifier: ElementLocator,
-    inputValue: string
-): Promise<void> => {
-    await elementIframe.fill(elementIdentifier, inputValue)
 }
 
 // When asserting on attribute text
