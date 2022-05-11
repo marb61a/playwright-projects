@@ -52,6 +52,32 @@ export const inputValueOnIframe = async(
     await elementIframe.fill(elementIdentifier, inputValue)
 }
 
+export const getIframeElement = async(
+    page: Page,
+    iframeIdentifier: ElementLocator
+) : Promise<Frame | undefined | null> => {
+    const elementHandle = await page.$(iframeIdentifier)
+    const elementIframe = await elementHandle?.contentFrame()
+    return elementIframe
+}
+
+export const getElementWithinIframe = async(
+    elementIframe: Frame,
+    elementIdentifier: ElementLocator
+): Promise<ElementHandle<SVGElement | HTMLElement> | null> => {
+    const visibleOnIframeElement = await elementIframe?.$(elementIdentifier)
+
+    return visibleOnIframeElement
+}
+
+export const getTextWithinIframeElement = async (
+    elementIframe: Frame,
+    elementIdentifier: ElementLocator,
+): Promise<string | null> => {
+    const textOnIframeElement = await elementIframe?.textContent(elementIdentifier)
+    return textOnIframeElement
+}
+
 export const inputValue = async (
     page: Page,
     elementIdentifier: ElementLocator,
