@@ -99,6 +99,27 @@ export const getTitleWithinPage = async (
     return titleWithinPage
 }
 
+export const getElementOnPage = async(
+    page: Page,
+    elementIdentifier: ElementLocator,
+    pages: Array<Page>,
+    pageIndex: number,
+): Promise<ElementHandle<SVGElement | HTMLElement> | null> => {
+    const elementOnPage = await pages[pageIndex].$(elementIdentifier)
+    
+    return elementOnPage
+}
+
+export const getElementTextWithinPage = async (
+    page: Page,
+    elementIdentifier: ElementLocator,
+    pages: Array<Page>,
+    pageIndex: number,
+): Promise<string | null> => {
+    const textWithinPage = await pages[pageIndex].textContent(elementIdentifier)
+
+    return textWithinPage
+}
 
 export const selectElementValue = async (
     page: Page,
