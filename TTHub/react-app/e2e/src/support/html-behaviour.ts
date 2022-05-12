@@ -155,3 +155,30 @@ export const getElement = async (
     const element = await page.$(elementIdentifier)
     return element
 }
+
+export const getElements = async(
+    page: Page,
+    elementIdentifier: ElementLocator
+): Promise<ElementHandle<SVGElement | HTMLElement> []> => {
+    const elements = await page.$$(elementIdentifier)
+    return elements
+}
+
+export const getElementAtIndex = async(
+    page: Page,
+    elementIdentifier: ElementLocator,
+    index: number    
+): Promise<ElementHandle<SVGElement | HTMLElement> | null> => {
+    const elementAtIndex = await page.$(`${elementIdentifier}>>nth=${index}`)
+    return elementAtIndex
+}
+
+export const getElementValue = async(
+    page: Page,
+    elementIdentifier: ElementLocator    
+): Promise<string | null> => {
+    const value = await page.$eval<string, HTMLSelectElement>(elementIdentifier, el => {
+        return el.value
+    })
+    return value
+}
