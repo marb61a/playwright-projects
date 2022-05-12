@@ -43,7 +43,7 @@
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.y0",
     "eslint-plugin-react": "^7.16.0",
-    "faker": "^4.1.0",
+    "faker": "^6.6.6",
     "prettier": "^1.18.2",
     "react-bootstrap": "^1.6.4",
     "react-router-dom": "^5.0.0"
