@@ -2,7 +2,7 @@ import { Frame, Page } from 'playwright'
 import { ElementLocator } from '../env/global'
 import {ElementHandle} from "@playwright/test"
 
-// Click Section
+// ----------- Click Section ------------------
 export const clickElement = async (
     page: Page,
     elementIdentifier: ElementLocator
@@ -20,7 +20,7 @@ export const clickElementAtIndex = async(
     await element?.click()
 }
 
-// Check Section
+// ----------- Check Section ------------------
 export const checkElement = async(
     page: Page,
     elementIdentifier: ElementLocator
@@ -43,7 +43,7 @@ export const elementChecked = async (
     return checked
 }
 
-// IFrame Section
+// ----------- IFrame Section ------------------
 export const inputValueOnIframe = async(
     elementIframe: Frame,
     elementIdentifier: ElementLocator,
@@ -78,7 +78,7 @@ export const getTextWithinIframeElement = async (
     return textOnIframeElement
 }
 
-// Page Section
+// ----------- Page Section ------------------
 export const inputValueOnPage = async (
     pages: Array<Page>,
     pageIndex: number,
@@ -121,6 +121,16 @@ export const getElementTextWithinPage = async (
     return textWithinPage
 }
 
+// ----------- Element Section ------------------
+export const inputElementValue = async (
+    page: Page,
+    elementIdentifier: ElementLocator,
+    input: string
+): Promise<void> => {
+    await page.focus(elementIdentifier)
+    await page.fill(elementIdentifier, input)
+}
+
 export const selectElementValue = async (
     page: Page,
     elementIdentifier: ElementLocator,
@@ -130,20 +140,18 @@ export const selectElementValue = async (
     await page.selectOption(elementIdentifier, option)
 }
 
-// When asserting on attribute text
-export const getAttributeText = async(
-    page: Page,
-    elementIdentifier: ElementLocator,
-    attribute: string
-): Promise<string | null> => {
-    const attributeText = page.locator(elementIdentifier).getAttribute(attribute)
-    return attributeText
-}
-
-export const scrollIntoView = async(
+export const scrollElementIntoView = async(
     page: Page,
     elementIdentifier: ElementLocator
-): Promise<void> => {
+) : Promise<void> => {
     const element = page.locator(elementIdentifier)
     await element.scrollIntoViewIfNeeded()
+}
+
+export const getElement = async (
+    page: Page,
+    elementIdentifier: ElementLocator,
+): Promise<ElementHandle<SVGElement | HTMLElement> | null> => {
+    const element = await page.$(elementIdentifier)
+    return element
 }
