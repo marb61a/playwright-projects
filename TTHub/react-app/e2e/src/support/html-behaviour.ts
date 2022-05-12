@@ -182,3 +182,20 @@ export const getElementValue = async(
     })
     return value
 }
+
+export const getElementText = async (
+    page: Page,
+    elementIdentifier: ElementLocator,
+): Promise<string | null> => {
+    const text = await page.textContent(elementIdentifier)
+    return text
+}
+
+export const getElementTextAtIndex = async (
+    page: Page,
+    elementIdentifier: ElementLocator,
+    index: number
+): Promise<string | null> => {
+    const textAtIndex = await page.textContent(`${elementIdentifier}>>nth=${index}`)
+    return textAtIndex
+}
