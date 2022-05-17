@@ -1,4 +1,4 @@
-import {Before, After, ITestCaseHookParameter, setDefaultTimeout} from "@cucumber/cucumber";
+import {Before, After, setDefaultTimeout} from "@cucumber/cucumber";
 
 import { env, envNumber } from '../../env/parseEnv';
 import { ScenarioWorld } from './world'
@@ -7,7 +7,7 @@ import { logger } from "../../logger";
 
 setDefaultTimeout(envNumber('SCRIPT_TIMEOUT'))
 
-Before(async function (this: ScenarioWorld, scenario: ITestCaseHookParameter) {
+Before(async function (this: ScenarioWorld, scenario) {
     logger.log(`Running the cucumber scenario ${scenario.pickle.name}`)
 
     const contextOptions = {
@@ -23,7 +23,7 @@ Before(async function (this: ScenarioWorld, scenario: ITestCaseHookParameter) {
     return ready
 });
 
-After(async function(this: ScenarioWorld, scenario: ITestCaseHookParameter) {
+After(async function(this: ScenarioWorld, scenario) {
     // Using this avoids the need to use global context
     const{
         screen:{page, browser}

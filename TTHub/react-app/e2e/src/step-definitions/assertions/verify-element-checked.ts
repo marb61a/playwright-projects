@@ -3,7 +3,9 @@ import { Then } from '@cucumber/cucumber'
 import { ElementKey } from '../../env/global'
 import { getElementLocator } from '../../support/web-element-helper'
 import {ScenarioWorld} from '../setup/world'
-import { waitFor } from '../../support/wait-for-behaviour'
+import { waitFor, waitForResult, waitForSelector } from '../../support/wait-for-behaviour'
+import { logger } from '../../logger'
+import { elementChecked } from '../../support/html-behaviour'
 
 Then(
     // Checks if the radio button is checked and also not checked when needed
@@ -18,10 +20,22 @@ Then(
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {
-            const isElementChecked = await page.isChecked(elementIdentifier)
+            const elementStable = await waitForSelector(page, elementIdentifier)
 
-            // Needs to check whether button is checked or not (true === true and false === false)
-            return isElementChecked === !negate
+            if(elementStable) {
+                const isElementChecked = await elementChecked(page, elementIdentifier)
+
+                if(isElementChecked === !negate) {
+                    return waitForResult.PASS
+                } else {
+                    return waitForResult.FAIL
+                }
+            } else {
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            }
+        }, globalConfig, {
+            target: elementKey,
+            failureMessage: `Expected ${elementKey} to ${negate ? 'not ' : ''}be checked`
         })
 
     }
