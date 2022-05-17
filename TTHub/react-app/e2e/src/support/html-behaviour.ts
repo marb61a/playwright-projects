@@ -199,3 +199,11 @@ export const getElementTextAtIndex = async (
     const textAtIndex = await page.textContent(`${elementIdentifier}>>nth=${index}`)
     return textAtIndex
 }
+
+export const elementEnabled = async (
+    page: Page,
+    elementIdentifier: ElementLocator,
+): Promise<boolean | null> => {
+    const enabled = await page.isEnabled(elementIdentifier)
+    return enabled
+}
