@@ -207,3 +207,26 @@ export const elementEnabled = async (
     const enabled = await page.isEnabled(elementIdentifier)
     return enabled
 }
+
+// ----------- Miscellaneous Section ------------------
+export const getAttributeText = async (
+    page: Page,
+    elementIdentifier: ElementLocator,
+    attribute: string
+): Promise<string | null> => {
+    const attributeText = page.locator(elementIdentifier).getAttribute(attribute)
+    return attributeText
+}
+
+export const getTableData = async(
+    page: Page,
+    elementIdentifier: ElementLocator,
+): Promise<string> => {
+    const table = await page.$$eval(elementIdentifier+" tbody tr", (rows) => {
+        return rows.map(row => {
+            const cells = row.querySelectorAll('td')
+            return Array.from(cells).map(cell => cell.textContent)
+        })
+    })
+    return JSON.stringify(table)
+}
