@@ -3,7 +3,12 @@ import { Then } from '@cucumber/cucumber'
 import { ElementKey } from '../../env/global'
 import { getElementLocator } from '../../support/web-element-helper'
 import {ScenarioWorld} from '../setup/world'
-import { waitFor } from '../../support/wait-for-behaviour'
+import {
+    getElement,
+    getElementAtIndex,
+    getElements
+} from "../../support/html-behaviour"
+import { waitFor, waitForResult } from '../../support/wait-for-behaviour'
 import { logger } from '../../logger'
 
 Then(
@@ -23,9 +28,18 @@ Then(
 
         // Expect from playwright does not work well with custom waitFor functionality so is replaced
         await waitFor(async() => {
-            const isElementVisible = (await page.$(elementIdentifier)) != null
-            // Returns whether true or false
-            return isElementVisible === !negate
+            const isElementVisible = await getElement(page, elementIdentifier) != null
+            
+            if (isElementVisible === !negate) {
+                return waitForResult.PASS
+            } else {
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            }
+        },
+        globalConfig,
+        {
+            target: elementKey,
+            failureMessage: `Expected ${elementKey} to ${negate?'not ':''}be displayed`
         })
     }
 )
@@ -49,8 +63,18 @@ Then(
         const index = Number(elementPosition.match(/\d/g)?.join('')) - 1
 
         await waitFor(async() => {
-            const isElementVisible = (await page.$(`${elementIdentifier}>>>nth=${index}`)) != null
-            return isElementVisible === !negate
+            const isElementVisible = await getElementAtIndex(page, elementIdentifier, index) != null
+
+            if (isElementVisible === !negate) {
+                return waitForResult.PASS
+            } else {
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            }
+        },
+        globalConfig,
+        {
+            target: elementKey,
+            failureMessage: `Expected ${elementPosition} ${elementKey} to ${negate?'not ':''}be displayed`
         }) 
     }
 )
