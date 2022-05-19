@@ -3,7 +3,17 @@ import { Then } from '@cucumber/cucumber'
 import { ElementKey } from '../../env/global'
 import { getElementLocator } from '../../support/web-element-helper'
 import {ScenarioWorld} from '../setup/world'
-import { waitFor } from '../../support/wait-for-behaviour'
+import {
+     waitFor,
+     waitForResult,
+     waitForSelectorOnPage
+} from '../../support/wait-for-behaviour'
+import {
+    getElementOnPage,
+    getElementTextWithinPage,
+    getTitleWithinPage
+} from "../../support/html-behaviour"
+import {logger} from "../../logger"
 
 // Verify new tab\page contains title
 Then(
@@ -15,6 +25,7 @@ Then(
         expectedTitle: string
     ) {
         const {
+            globalConfig,
             screen: { page, context }
         } = this
 
@@ -27,7 +38,17 @@ Then(
         await waitFor(async () => {
             let pages = context.pages()
             const pageTitle = await pages[pageIndex].title()
-            return pageTitle?.includes(expectedTitle) === !negate 
+
+            if (pageTitle?.includes(expectedTitle) === !negate) {
+                return waitForResult.PASS
+            } else {
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            }
+        },
+        globalConfig,
+        {
+            target: expectedTitle,
+            failureMessage: `Expected page to ${negate ? 'not ' : ''}contain the title ${expectedTitle}`
         })
     }
 )
@@ -54,7 +75,17 @@ Then(
         await waitFor(async() => {
             let pages = context.pages()
             const isElementVisible = (await pages[pageIndex].$(elementIdentifier)) != null
-            return isElementVisible === !negate
+
+            if (isElementVisible === !negate) {
+                return waitForResult.PASS
+            } else {
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            }
+        },
+        globalConfig,
+        {
+            target: elementKey,
+            failureMessage: `Expected ${elementKey} on page to ${negate?'not ':''}be displayed`
         })
     }
 )
