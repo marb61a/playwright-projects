@@ -3,29 +3,45 @@ import { Then } from '@cucumber/cucumber'
 import { ElementKey } from '../../env/global'
 import { getElementLocator } from '../../support/web-element-helper'
 import {ScenarioWorld} from '../setup/world'
-import { waitFor } from '../../support/wait-for-behaviour'
-import { getIFrameElement } from '../../support/html-behaviour'
+import { waitFor, waitForResult, waitForSelectorInIframe } from '../../support/wait-for-behaviour'
+import { 
+    getIframeElement,
+    getElementWithinIframe,
+    getTextWithinIframeElement
+} from '../../support/html-behaviour'
 import { logger } from '../../logger'
 
 // Asserts iframe value is displayed or not (If negative is needed)
 Then(
     /^the "([^"]*)" on the "([^"]*)" iframe should( not)? be displayed$/,
-    async function(this: ScenarioWorld, elementKey: ElementKey, iFrameName: string, negate: boolean) {
+    async function(this: ScenarioWorld, elementKey: ElementKey, iframeKey: string, negate: boolean) {
         const {
             screen: { page},
             globalConfig
         } = this
 
-        logger.log(`The ${elementKey} on the ${iFrameName} should ${negate?'not ':''} be displayed`)
+        logger.log(`The ${elementKey} on the ${iframeKey} should ${negate?'not ':''} be displayed`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
-        const iframeIdentifier = getElementLocator(page, iFrameName, globalConfig)
+        const iframeIdentifier = getElementLocator(page, iframeKey, globalConfig)
 
         await waitFor(async() => {
-            const elementIframe = await getIFrameElement(page, iframeIdentifier)
+            const elementIframe = await getIframeElement(page, iframeIdentifier)
 
-            // Check in iframe on current page if element is true or false
-            const isElementVisible = (await elementIframe?.$(elementIdentifier)) != null
-            return isElementVisible === !negate
+            if (elementIframe) {
+                const isElementVisible = await getElementWithinIframe(elementIframe, elementIdentifier) != null
+                if (isElementVisible === !negate) {
+                    return {result: waitForResult.PASS}
+                } else {
+                    return {result: waitForResult.FAIL, replace: elementKey}
+                }
+            } else {
+                return {result: waitForResult.ELEMENT_NOT_AVAILABLE, replace: iframeKey}
+            }
+        },
+        globalConfig,
+        {
+            target: elementKey,
+            failureMessage: `Expected ${elementKey} to ${negate ? 'not ' : ''}be displayed`
         })
     }
 )

@@ -100,8 +100,18 @@ Then(
         await waitFor(async() => {
             // $$ matches all elements matching specified selector, normal assumptions are that
             // there will be multiple occurences of a selector on a page
-            const element = await page.$$(elementIdentifier)
-            return (Number(count) === element.length) === !negate
+            const element = await getElements(page, elementIdentifier)
+            
+            if ((Number(count) === element.length) === !negate) {
+                return waitForResult.PASS
+            } else {
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            }
+        },
+        globalConfig,
+        {
+            target: elementKey,
+            failureMessage: `Expected ${count} ${elementKey} to ${negate ? 'not ' : ''}be displayed`
         })
     }
 )
