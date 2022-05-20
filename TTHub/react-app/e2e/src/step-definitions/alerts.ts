@@ -1,5 +1,6 @@
 import { When } from '@cucumber/cucumber';
-import { ScenarioWorld } from './setup/world';;
+import { ScenarioWorld } from './setup/world';
+import {logger} from "../logger"
 
 When(
     /^I click (accept)?(dismiss)? on the alert dialog$/,
@@ -15,6 +16,5 @@ When(
         } else {
             page.on('dialog', dialog => dialog.accept());
         }
-
     }
 );
