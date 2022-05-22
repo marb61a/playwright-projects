@@ -35,7 +35,7 @@ export const waitFor = async <T>(
     }
 ): Promise<void> => {
     const {
-        timeout= 20000, wait=2000, target = '', type = 'element'
+        timeout= 10000, wait=2000, target = '', type = 'element'
     } = options || {}
 
     // New sleep resolves the promise

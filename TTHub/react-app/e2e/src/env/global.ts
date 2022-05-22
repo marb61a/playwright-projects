@@ -16,6 +16,12 @@ export type GlobalVariables = {[key: string]: string}
 export type EmailsConfig = Record<string, string>
 export type ErrorsConfig = ErrorConfig[]
 
+export type MockConfigKey = string
+export type MockServerKey = string
+export type MockPayloadKey = string
+export type MockPayloadMappings = Record<string, string>
+export type MocksConfig = Record<string, string>
+
 export type ErrorConfig = {
     originalErrMsgRegexString: string;
     parsedErrMsg: string;
@@ -25,6 +31,8 @@ export type GlobalConfig = {
     hostsConfig: HostsConfig
     pagesConfig: PagesConfig
     pageElementMappings: PageElementMappings
+    mockPayloadMappings: MockPayloadMappings
     errorsConfig: ErrorsConfig
     emailsConfig: EmailsConfig
+    mocksConfig: MocksConfig
 }
