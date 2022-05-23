@@ -24,6 +24,8 @@
   "description": "",
   "dependencies": {
     "@babel/cli": "^7.17.6",
+    "axe-html-reporter": "^2.2.3",
+    "axe-playwright": "^1.1.11",
     "dotenv": "^16.0.0",
     "faker": "^6.6.6",
     "playwright-chromium": "^1.19.2"
