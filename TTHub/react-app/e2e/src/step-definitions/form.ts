@@ -1,12 +1,26 @@
-import { Then } from "@cucumber/cucumber";
+import { Then } from "@cucumber/cucumber"
 
-import { waitFor } from "../support/wait-for-behaviour";
-import { parseInput } from "../support/input-helper"
-import { getElementLocator } from "../support/web-element-helper";
-import { ScenarioWorld } from "./setup/world";
-import { ElementKey } from "../env/global";
-import { inputValue, selectValue } from '../support/html-behaviour'
-import { logger } from "../logger";
+import {
+    selectElementValue,
+    inputElementValue,
+} from '../support/html-behaviour'
+import {
+    parseInput,
+} from '../support/input-helper'
+import {
+    waitFor, waitForResult,
+    waitForSelector
+} from '../support/wait-for-behaviour'
+import {
+    getRandomData,
+    RandomInputType,
+    randomInputTypes
+} from '../support/random-data-helper'
+import { getElementLocator } from '../support/web-element-helper'
+import { ScenarioWorld } from './setup/world'
+import { ElementKey } from '../env/global'
+import {logger} from "../logger"
+import {stringIsOfOptions} from "../support/options-helper"
 
 Then(
     /^ I fill in the "([^"]*)" with "([^"]*)"$/,
@@ -20,42 +34,47 @@ Then(
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async () => {
-            const result = await page.waitForSelector(elementIdentifier, {
-                state: 'visible'
-            })
+            const elementStable = await waitForSelector(page, elementIdentifier)
 
-            if(result){
-                // Will check to see if input has environmental variable values
+            if (elementStable) {
                 const parsedInput = parseInput(input, globalConfig)
-                await inputValue(page, elementIdentifier, parsedInput)
+                await inputElementValue(page, elementIdentifier, parsedInput)
+                return waitForResult.PASS
             }
 
-            return result
-        })
+            return waitForResult.ELEMENT_NOT_AVAILABLE
+        },
+        globalConfig,
+        {target: elementKey})
     }
 )
 
 Then(
     /^ I select the "([^"]*)" option from the "([^"]*)"$/,
-    async function(this: ScenarioWorld, option: string, elementKey: ElementKey){
+    async function(this: ScenarioWorld, elementKey: ElementKey, randomInputType: RandomInputType){
         const {
             screen:{ page },
             globalConfig
         } = this 
 
-        logger.log(`I select the ${option} option from the ${elementKey}`)
+        logger.log(`I fill in the ${elementKey} input with random ${randomInputType}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+        const validRandomInputType = stringIsOfOptions<RandomInputType>(randomInputType, randomInputTypes)
 
-        await waitFor(async () => {
-            const result = await page.waitForSelector(elementIdentifier, {
-                state: 'visible'
-            })
+        await waitFor(
+            async () => {
+                const elementStable = await waitForSelector(page, elementIdentifier)
 
-            if(result){
-                await selectValue(page, elementIdentifier, option)
-            }
+                if (elementStable) {
+                    const randomContent = getRandomData(validRandomInputType)
+                    await inputElementValue(page, elementIdentifier, randomContent)
+                    return waitForResult.PASS
+                }
 
-            return result
-        })
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            },
+            globalConfig,
+            {target: elementKey}
+        )
     }
 )
