@@ -1,4 +1,4 @@
-import faker from 'faker'
+import faker from '@faker-js/faker'
 
 export const randomInputTypes = ['email', 'password'] as const
 export type RandomInputType = typeof randomInputTypes[number]
