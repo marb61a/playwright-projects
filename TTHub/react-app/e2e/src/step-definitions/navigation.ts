@@ -22,7 +22,10 @@ Given(
 
         await navigateToPage(page, pageId, globalConfig)
 
-        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig))
+        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig), globalConfig, {
+            target: pageId,
+            type: 'page'
+        })
     }
 )
 
@@ -37,7 +40,10 @@ Given (
         logger.log(`I am directed to the ${pageId} page`)
 
         // Stabilises the framework
-        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig))
+        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig), globalConfig, {
+            target: pageId,
+            type: 'page'
+        })
     }
 )
 
@@ -54,8 +60,10 @@ Given (
 
         await reloadPage(page)
 
-        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig), {
-            timeout:20000
+        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig), globalConfig, {
+            target: pageId,
+            type: 'page',
+            timeout: 30000
         })
     }
 )
