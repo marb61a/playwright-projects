@@ -3,8 +3,13 @@ import { Then } from '@cucumber/cucumber'
 import { ElementKey } from '../env/global'
 import { getElementLocator } from '../support/web-element-helper'
 import {ScenarioWorld} from './setup/world'
-import { waitFor } from '../support/wait-for-behaviour'
-import { scrollIntoView } from '../support/html-behaviour'
+import { 
+    waitFor ,
+    waitForResult,
+    waitForSelector
+} from '../support/wait-for-behaviour'
+import { scrollElementIntoView } from '../support/html-behaviour'
+import {logger} from "../logger"
 
 Then(
     /^I scroll to the "([^"]*)"$/,
@@ -18,15 +23,15 @@ Then(
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async() => {
-            const result = await page.waitForSelector(elementIdentifier, {
-                state: 'visible'
-            })
-
-            if(result){
-                await scrollIntoView(page, elementIdentifier)
+            const elementStable = await waitForSelector(page, elementIdentifier)
+            if(elementStable) {
+                await scrollElementIntoView(page, elementIdentifier)
+                return waitForResult.PASS
             }
 
-            return result
-        })
+            return waitForResult.ELEMENT_NOT_AVAILABLE
+        },
+        globalConfig,
+        {target: elementKey})
     }
 )
