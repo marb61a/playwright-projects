@@ -39,7 +39,7 @@ export class ScenarioWorld extends World {
         // which will be based on an env variable that has been set
         const browser = await this.newBrowser()
         const context = await browser.newContext(contextOptions)
-        const page = await context.newPage();
+        const page = await context.newPage()
 
         this.screen = {browser, context, page}
 

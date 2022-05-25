@@ -17,8 +17,8 @@ export const navigateToPage = async (
     const hostPath = hostsConfig[`${hostName}`]
     const url = new URL(hostPath)
 
-    const pagesConfigItem = pagesConfig[pageId]
-    url.pathname = pagesConfigItem.route
+    const pageConfigItem = pagesConfig[pageId]
+    url.pathname = pageConfigItem.route
 
     await page.goto(url.href)
 }
@@ -41,7 +41,7 @@ export const currentPathMatchesPageId = (
     globalConfig: GlobalConfig
 ): waitForResult => {
     // URL is a TS built in function to handle dealing with URL's
-    const { pathname: currentPath} = new URL(page.url())
+    const { pathname: currentPath } = new URL(page.url())
     if(pathMatchesPageId(currentPath, pageId, globalConfig)) {
         return waitForResult.PASS
     }
@@ -56,15 +56,15 @@ export const getCurrentPageId = (
     const { pagesConfig } = globalConfig
     const pageConfigPageIds = Object.keys(pagesConfig)
 
-    const { pathname: currentPath} = new URL(page.url())
+    const { pathname: currentPath } = new URL(page.url())
     const currentPageId = pageConfigPageIds.find(pageId => 
         pathMatchesPageId(currentPath, pageId, globalConfig)    
     )
 
-    if(!currentPageId){
+    if(!currentPageId) {
         throw Error (
             `Failed to get page name from current route ${currentPath}, \
-            possible pages: ${JSON.stringify((pagesConfig))}`
+            possible pages: ${JSON.stringify(pagesConfig)}`
         )
     }
 

@@ -1,9 +1,9 @@
-import {Before, After, setDefaultTimeout} from "@cucumber/cucumber";
+import {Before, After, setDefaultTimeout} from "@cucumber/cucumber"
 
-import { env, envNumber } from '../../env/parseEnv';
+import { env, envNumber } from '../../env/parseEnv'
 import { ScenarioWorld } from './world'
 import { getViewPort } from '../../support/browser-behaviour'
-import { logger } from "../../logger";
+import { logger } from "../../logger"
 
 setDefaultTimeout(envNumber('SCRIPT_TIMEOUT'))
 
@@ -21,7 +21,7 @@ Before(async function (this: ScenarioWorld, scenario) {
 
     const ready = await this.init(contextOptions)
     return ready
-});
+})
 
 After(async function(this: ScenarioWorld, scenario) {
     // Using this avoids the need to use global context
@@ -32,7 +32,7 @@ After(async function(this: ScenarioWorld, scenario) {
     // Use here instead of after all which would create screenshots in every context
     const scenarioStatus = scenario.result?.status
 
-    if(scenarioStatus === 'FAILED'){
+    if(scenarioStatus === 'FAILED') {
         const screenshot = await page.screenshot({
             path: `${env('SCREENSHOT_PATH')}${scenario.pickle.name}.png`,
         })
@@ -42,5 +42,5 @@ After(async function(this: ScenarioWorld, scenario) {
 
     await browser.close()
     return browser
-});
+})
 

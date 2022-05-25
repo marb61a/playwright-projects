@@ -45,7 +45,7 @@ export const waitFor = async <T>(
 
     try {
         while(new Date().getTime() - startDate.getTime() < timeout){
-            const result = await predicate();
+            const result = await predicate()
             let resultAs: waitForResult
 
             if((result as waitForResultWithContext).result) {
@@ -62,7 +62,7 @@ export const waitFor = async <T>(
             }
     
             await sleep(wait)
-            logger.log(`Waiting ${wait}ms`)
+            logger.debug(`Waiting ${wait}ms`)
         }
     
         throw new Error(`Wait time of ${timeout}ms for ${notAvailableContext || target} exceeded`)
