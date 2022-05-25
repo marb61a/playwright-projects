@@ -8,7 +8,10 @@ import {
     HostsConfig,
     PagesConfig,
     EmailsConfig,
-    PageElementMappings
+    ErrorsConfig,
+    MocksConfig,
+    PageElementMappings,
+    MockPayloadMappings,
 } from './env/global'
 import { generateCucumberRuntimeTag } from './support/tag-helper'
 
@@ -22,8 +25,11 @@ dotenv.config({ path: `${env('ENV_PATH')}${environment}.env`})
 const hostsConfig: HostsConfig = getJsonFromFile(env('HOSTS_URLS_PATH')) 
 const pagesConfig: PagesConfig = getJsonFromFile(env('PAGE_URLS_PATH')) 
 const emailsConfig: EmailsConfig = getJsonFromFile(env('EMAILS_URLS_PATH'))
+const errorsConfig: ErrorsConfig = getJsonFromFile(env('ERRORS_URLS_PATH'))
+const mocksConfig: MocksConfig = getJsonFromFile(env('MOCKS_URLS_PATH'))
 
 const mappingFiles = fs.readdirSync(`${process.cwd()}${env('PAGE_ELEMENTS_PATH')}`)
+const payloadFiles = fs.readdirSync(`${process.cwd()}${env('MOCK_PAYLOAD_PATH')}`)
 
 const getEnvList = (): string[] => {
     const envList = Object.keys(hostsConfig)
@@ -47,11 +53,23 @@ const pageElementMappings: PageElementMappings = mappingFiles.reduce(
     }, {}
 )
 
+const mockPayloadMappings: MockPayloadMappings = payloadFiles.reduce(
+    (payloadConfigAcc, file) => {
+        const key = file.replace('.json', '')
+        const payloadMappings = getJsonFromFile(`${env('MOCK_PAYLOAD_PATH')}${file}`)
+        return {...payloadConfigAcc, [key]: payloadMappings }
+    },
+    {}
+)
+
 const worldParameters: GlobalConfig = {
     hostsConfig,
     pagesConfig,
     emailsConfig,
-    pageElementMappings
+    errorsConfig,
+    mocksConfig,
+    pageElementMappings,
+    mockPayloadMappings
 }
 
 // Holds arguments instead of using package.json
