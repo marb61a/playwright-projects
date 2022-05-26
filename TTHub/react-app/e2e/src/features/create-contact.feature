@@ -89,3 +89,18 @@ Feature: As a user I expect to be able to create contacts
         And the "address" should contain the text "740 Evergreen Terrace, Springfield"
         And the "edit" should be displayed
         And the "delete" should be displayed
+
+        And I fill in the "search" input with "Todd Flanders"
+        And the "contact" should be displayed
+        And the "full name label" should contain the text "Name:"
+        And the "name" should contain the text "Todd Flanders"
+        And the "gender label" should contain the text "Gender:"
+        And the "gender" should contain the text "Male"
+        And the "address label" should contain the text "Address:"
+        And the "address" should contain the text "740 Evergreen Terrace, Springfield"
+        And the "edit" should be displayed
+        And the "delete" should be displayed
+
+        And I fill in the "search" input with "Flanders"
+        And the "1st" "contact" should be displayed
+        And the "2nd" "contact" should be displayed
